@@ -1,0 +1,61 @@
+.categories {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.category {
+    min-width: 280px;
+    min-height: 300px;
+    border: 1px #CCC solid;
+    box-shadow: inset 0px 11px 8px -10px #CCC, inset 0px -11px 8px -10px #CCC;
+    padding: 5px;
+}
+
+.input {
+    width: 70px;
+}
+
+.remove-button {
+    border-radius: 50%;
+    outline: none;
+    background: #CCC;
+    color: black;
+    position: absolute;
+    left: 160px;
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    transition: 0.3s;
+}
+
+.remove-button:hover {
+    cursor: pointer;
+    background: #cc786b;
+}
+
+.adv {
+    position: relative;
+    margin: 5px 0px;
+}
+
+.input-long {
+    width: 120px;
+}
+
+.red {
+    color: red;
+}
+
+.scroll-bar {
+    height: 350px;
+    overflow: auto;
+    box-shadow: 0 8px 6px -6px #888, 0 -8px 6px -6px #888;
+    margin: 15px 0px;
+}
+
+.statistics {
+    text-align: center;
+    margin: 10px 0px;
+}

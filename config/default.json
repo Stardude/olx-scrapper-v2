@@ -1,0 +1,38 @@
+{
+  "Authorization": {
+    "cookiesFilePath": "./cookies.json"
+  },
+
+  "Selectors": {
+    "usernameInput": "#userEmail",
+    "passwordInput": "#userPass",
+    "pagination": "span.item.fleft",
+    "statistics": "#adsTable > tbody > tr > td > table > tbody > tr > td > table > tbody > tr",
+    "editAdvLink": "div.x-small.lheight16.margintop3.rel > a.editme",
+    "priceInput": "#parameter-div-price > div.area.clr > div > div > p > input[type='text'].paramPriceInput",
+    "saveAdvBtn": "#save"
+  },
+
+  "Urls": {
+    "host": "http://www.olx.ua",
+    "mainPath": "/myaccount",
+    "editAdvPath": "/post-new-ad/edit/<CODE>/?bs=myaccount_edit&ref%5B0%5D%5Bpath%5D%5B0%5D=archive&ref%5B0%5D%5Baction%5D=myaccount&ref%5B0%5D%5Bmethod%5D=index"
+  },
+
+  "Categories": [
+    "winter",
+    "summer",
+    "spring",
+    "discounts"
+  ],
+
+  "Delays": {
+    "priceChange": 500,
+    "saveBtnClick": 1000,
+    "closePage": 1500,
+    "keyboardType": 75
+  },
+
+  "advsAmountPerIteration": 3,
+  "onlyActive": true
+}

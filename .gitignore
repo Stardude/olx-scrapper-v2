@@ -1,0 +1,7 @@
+node_modules/
+logs/*
+config/auth.json
+config/google-api.json
+config/categories/*
+package-lock.json
+.idea/

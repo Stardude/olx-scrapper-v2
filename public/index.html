@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OLX SCRAPER</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+    <script src="app.js"></script>
+</head>
+<body ng-app="app" ng-controller="MainCtrl">
+    <div class="statistics">
+        <input type="button" value="Collect and Save Statistics" ng-click="fetchStatistics()" />
+    </div>
+    <div class="categories">
+        <div class="category" ng-repeat="(category, items) in data.advs">
+            <h3 align="center">Category: {{category}}</h3>
+            <div class="scroll-bar">
+                <ul>
+                    <li ng-repeat="adv in items" class="adv">
+                        <div ng-if="adv">
+                            <span ng-if="!adv.new" ng-class="{red: adv.problematic}">{{adv.id}}: {{adv.name}}</span>
+                            <input ng-if="adv.new" class="input" type="text" ng-model="adv.id" />
+                            <input ng-if="adv.new" class="input" ng-model="adv.name" type="text" />
+                            <input type="button" class="remove-button" value="X" ng-click="removeItem(category, adv.index)" />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <input type="button" value="Add" ng-click="addItem(category)" />
+            <input type="button" value="Update" ng-click="update(category)" ng-disabled="updateDisabled(category)" />
+            <br/><br/>
+            <input type="text" class="input" id="{{category}}_fixed" value="0" />
+            <input type="button" value="Change (fixed)" ng-click="changePrice(category, 'fixed')" ng-disabled="data.btnsDisabled" />
+            <br/><br/>
+            <input type="text" class="input" id="{{category}}_percentage" value="0" />
+            <input type="button" value="Change (%)" ng-click="changePrice(category, 'percentage')" ng-disabled="data.btnsDisabled" />
+        </div>
+    </div>
+</body>
+</html>
