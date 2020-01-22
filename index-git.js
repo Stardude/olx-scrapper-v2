@@ -11,6 +11,7 @@
         await git.addConfig('user.name', gitConfig.username);
         const updated = await git.pull('origin', 'master');
         console.log(updated);
+        console.log('\n\n');
     } catch (e) {
         console.error(e);
     }
