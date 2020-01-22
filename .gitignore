@@ -5,3 +5,4 @@ config/google-api.json
 config/categories/*
 package-lock.json
 .idea/
+cookies.json
