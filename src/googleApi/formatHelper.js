@@ -265,6 +265,23 @@ module.exports = {
             repeatCell: {
                 range: {
                     sheetId: sheetId,
+                    startRowIndex: productRowPosition + 9,
+                    endRowIndex: productRowPosition + 10,
+                    startColumnIndex: 1,
+                    endColumnIndex: lastColumnId
+                },
+                cell: {
+                    userEnteredFormat: {
+                        backgroundColor: { red: 0.85, green: 0.92, blue: 0.83 }
+                    }
+                },
+                fields: 'userEnteredFormat(backgroundColor)'
+            }
+        },
+        {
+            repeatCell: {
+                range: {
+                    sheetId: sheetId,
                     startRowIndex: productRowPosition + 4,
                     endRowIndex: productRowPosition + 5,
                     startColumnIndex: 1,
@@ -301,6 +318,23 @@ module.exports = {
                     sheetId: sheetId,
                     startRowIndex: productRowPosition + 8,
                     endRowIndex: productRowPosition + 9,
+                    startColumnIndex: 1,
+                    endColumnIndex: lastColumnId
+                },
+                cell: {
+                    userEnteredFormat: {
+                        horizontalAlignment: 'RIGHT'
+                    }
+                },
+                fields: 'userEnteredFormat(horizontalAlignment)'
+            }
+        },
+        {
+            repeatCell: {
+                range: {
+                    sheetId: sheetId,
+                    startRowIndex: productRowPosition + 10,
+                    endRowIndex: productRowPosition + 11,
                     startColumnIndex: 1,
                     endColumnIndex: lastColumnId
                 },

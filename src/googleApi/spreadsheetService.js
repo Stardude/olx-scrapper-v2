@@ -9,7 +9,7 @@ class Spreadsheet {
         this.jwtClient = jwtClient;
         this.spreadsheets = google.sheets('v4').spreadsheets;
 
-        this.rowsHeight = 10;
+        this.rowsHeight = 12;
         this.rowsDividers = 2;
         this.firstProductRow = 3;
     }
@@ -67,6 +67,8 @@ class Spreadsheet {
                     ['*****************', 'ТЕЛЕФОН       =>'],
                     ['*****************', 'різниця'],
                     ['*****************', 'ОБРАНЕ          =>'],
+                    ['*****************', 'різниця'],
+                    ['*****************', 'ПОВІДОМЛЕННЯ   =>'],
                     ['*****************', 'різниця']
                 ]
             });
@@ -147,7 +149,9 @@ class Spreadsheet {
                     [data.phones],
                     [lastColumn === 3 ? 0 : `=${letter}${product.row + 3}-${previousLetter}${product.row + 3}`],
                     [data.chosen],
-                    [lastColumn === 3 ? 0 : `=${letter}${product.row + 5}-${previousLetter}${product.row + 5}`]
+                    [lastColumn === 3 ? 0 : `=${letter}${product.row + 5}-${previousLetter}${product.row + 5}`],
+                    [data.message],
+                    [lastColumn === 3 ? 0 : `=${letter}${product.row + 7}-${previousLetter}${product.row + 7}`]
                 ]
             });
         });

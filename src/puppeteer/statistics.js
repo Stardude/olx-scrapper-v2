@@ -1,7 +1,7 @@
 const config = require('config');
 const { getValue } = require('../utils');
 
-const { editAdvLink, pagination, statistics } = config.Selectors;
+const { editAdvLink, pagination, statistics, message } = config.Selectors;
 const { host, mainPath } = config.Urls;
 const { priceChange, saveBtnClick, closePage, keyboardType } = config.Delays;
 
@@ -16,7 +16,7 @@ const getAdvIds = async page => {
 };
 
 const getAdvStatistics = async (page, statSelector) => {
-    const statsRows = await page.$$(`${statistics} > ${statSelector}`);
+    const statsRows = await page.$$(statSelector);
     const statisticData = [];
     for (let i = 0; i < statsRows.length; i++) {
         const statsRow = statsRows[i];
@@ -33,6 +33,7 @@ const prepareResult = (result, advIdsOnPage, advStatistics) => {
                 views: advStatistics[0][index],
                 phones: advStatistics[1][index],
                 chosen: advStatistics[2][index],
+                message: advStatistics[3][index]
             };
         }
     });
@@ -49,9 +50,10 @@ module.exports = {
             for (let i = 2; i <= paginationHandlers.length; i++) {
                 let advIdsOnPage = await getAdvIds(page);
                 let advStatistics = [
-                    await getAdvStatistics(page, 'td:nth-child(2) > div > span > span'),
-                    await getAdvStatistics(page, 'td:nth-child(3) > div > span'),
-                    await getAdvStatistics(page, 'td:nth-child(4) > div > span')
+                    await getAdvStatistics(page, `${statistics} > td:nth-child(2) > div > span > span`),
+                    await getAdvStatistics(page, `${statistics} > td:nth-child(3) > div > span`),
+                    await getAdvStatistics(page, `${statistics} > td:nth-child(4) > div > span`),
+                    await getAdvStatistics(page, message)
                 ];
                 prepareResult(result, advIdsOnPage, advStatistics);
 
@@ -65,9 +67,10 @@ module.exports = {
             for (let i = 2; i <= paginationHandlers.length; i++) {
                 let advIdsOnPage = await getAdvIds(page);
                 let advStatistics = [
-                    await getAdvStatistics(page, 'td:nth-child(2) > div > span > span'),
-                    await getAdvStatistics(page, 'td:nth-child(3) > div > span'),
-                    await getAdvStatistics(page, 'td:nth-child(4) > div > span')
+                    await getAdvStatistics(page, `${statistics} > td:nth-child(2) > div > span > span`),
+                    await getAdvStatistics(page, `${statistics} > td:nth-child(3) > div > span`),
+                    await getAdvStatistics(page, `${statistics} > td:nth-child(4) > div > span`),
+                    await getAdvStatistics(page, message)
                 ];
                 prepareResult(result, advIdsOnPage, advStatistics);
 
