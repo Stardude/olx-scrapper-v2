@@ -1,6 +1,6 @@
 const fs = require('fs').promises;
 const config = require('config');
-const { email, password } = require('../../config/auth');
+const { email, password } = require('../../config/auth').Olx;
 
 const { cookiesFilePath } = config.Authorization;
 const { usernameInput, passwordInput, editAdvLink } = config.Selectors;
