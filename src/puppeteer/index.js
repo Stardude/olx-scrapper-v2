@@ -7,9 +7,11 @@ const statistics = require('./statistics');
 let browser = null;
 
 const launch = async () => {
-    browser = await puppeteer.launch({headless: false});
-    const mainPage = await browser.newPage();
-    await login(mainPage);
+    if (!browser) {
+        browser = await puppeteer.launch({headless: false});
+        const mainPage = (await browser.pages())[0];
+        await login(mainPage);
+    }
 };
 
 const changePrice = async data => {
@@ -21,7 +23,10 @@ const fetchStatistics = async () => {
 };
 
 const close = async () => {
-    await browser.close();
+    if (browser) {
+        await browser.close();
+        browser = null;
+    }
 };
 
 module.exports = { launch, changePrice, fetchStatistics, close };

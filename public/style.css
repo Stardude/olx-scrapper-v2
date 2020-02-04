@@ -22,12 +22,11 @@
     outline: none;
     background: #CCC;
     color: black;
-    position: absolute;
-    left: 160px;
     width: 20px;
     height: 20px;
     font-size: 10px;
     transition: 0.3s;
+    margin: -5px 0px;
 }
 
 .remove-button:hover {
@@ -36,7 +35,6 @@
 }
 
 .adv {
-    position: relative;
     margin: 5px 0px;
 }
 
@@ -46,6 +44,12 @@
 
 .red {
     color: red;
+    font-weight: bold;
+}
+
+.green {
+    color: green;
+    font-weight: bold;
 }
 
 .scroll-bar {

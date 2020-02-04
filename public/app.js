@@ -3,24 +3,30 @@
 
    app.controller('MainCtrl', async ($scope, $http) => {
        $scope.data = {
-           btnsDisabled: false
+           btnsDisabled: false,
+           checked: {}
        };
 
        function adjustAdvs (advs) {
            Object.keys(advs).forEach(cat => {
                let index = 0;
-               advs[cat] = advs[cat].map(i => ({...i, index: index++}));
+               advs[cat] = advs[cat].map(i => ({...i, index: index++, checked: false}));
+               $scope.data.checked[cat] = false;
            });
        }
 
-       function markProblematicAdvs (problematicAdvs, category) {
+       function markAdvs (successfulAdvs, problematicAdvs, category) {
            $scope.data.advs[category] = $scope.data.advs[category].map(i => {
                if (problematicAdvs.includes(i.id)) {
                    return {...i, problematic: true};
+               } else if (successfulAdvs.includes(i.id)) {
+                   return {...i, successful: true};
                } else {
                    return i;
                }
            });
+
+           $scope.$apply();
        }
 
        $http.get('/categories').then(res => {
@@ -28,21 +34,36 @@
            adjustAdvs($scope.data.advs);
        });
 
-       $scope.changePrice = (category, type, offsetParam) => {
+       $scope.changePrice = async (category, type) => {
            const el = document.getElementById(`${category}_${type}`);
            const value = el.value;
-           let offset = offsetParam || 0;
+           const filteredAdvs = $scope.data.advs[category].filter(adv => adv.checked);
            $scope.data.btnsDisabled = true;
-           $http.post('/changePrice', { value, type, category, offset }, { timeout: 60000 * 60 * 24 }).then(res => {
-               const {problematicAdvs, newOffset} = res.data;
-               markProblematicAdvs(problematicAdvs, category);
-               if (newOffset) {
-                   $scope.changePrice(category, type, newOffset);
-                   return;
+
+           let offset = 0,
+               advs = [],
+               batchSize = filteredAdvs.length,
+               i = 0;
+
+           while (i < filteredAdvs.length) {
+               advs = filteredAdvs.slice(offset, batchSize);
+               const res = await $http.post('/changePrice', { value, type, advs }, { timeout: 60000 * 60 * 24 });
+               const {successfulAdvs, problematicAdvs} = res.data;
+               markAdvs(successfulAdvs, problematicAdvs, category);
+               const newOffset = res.data.offset;
+
+               if (!newOffset || i + newOffset === filteredAdvs.length) {
+                   await $http.post('/close', {});
+                   break;
                }
-               $scope.data.btnsDisabled = false;
-               el.value = 0;
-           });
+
+               offset += newOffset;
+               i = offset;
+           }
+
+           $scope.data.btnsDisabled = false;
+           el.value = 0;
+           i !== 0 && $scope.$apply();
        };
 
        $scope.addItem = category => {
@@ -84,6 +105,14 @@
 
        $scope.fetchStatistics = () => {
            $http.get('/statistics');
+       };
+
+       $scope.toggleCheckboxes = category => {
+           const list = $scope.data.advs[category];
+           list.forEach(item => {
+               item.checked = !$scope.data.checked[category];
+           });
+           $scope.data.checked[category] = !$scope.data.checked[category];
        };
    });
 })(window.angular);

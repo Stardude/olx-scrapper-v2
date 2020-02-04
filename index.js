@@ -14,14 +14,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(publicPath));
 
 app.post('/changePrice', async (req, res) => {
-    if (req.body.offset === 0) {
-        await puppeteer.launch();
-    }
-    const results = await puppeteer.changePrice(req.body)
-    if (results.newOffset === null) {
+    await puppeteer.launch();
+    const results = await puppeteer.changePrice(req.body);
+    if (results.offset === null) {
         await puppeteer.close();
     }
     res.send(results);
+});
+
+app.post('/close', async (req, res) => {
+    await puppeteer.close();
+    res.sendStatus(201);
 });
 
 app.get('/categories', async (req, res) => {
