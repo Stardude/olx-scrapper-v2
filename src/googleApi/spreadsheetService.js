@@ -145,13 +145,13 @@ class Spreadsheet {
                     [null],
                     [null],
                     [data.views],
-                    [lastColumn === 3 ? 0 : `=${letter}${product.row + 1}-${previousLetter}${product.row + 1}`],
-                    [data.phones],
                     [lastColumn === 3 ? 0 : `=${letter}${product.row + 3}-${previousLetter}${product.row + 3}`],
-                    [data.chosen],
+                    [data.phones],
                     [lastColumn === 3 ? 0 : `=${letter}${product.row + 5}-${previousLetter}${product.row + 5}`],
+                    [data.chosen],
+                    [lastColumn === 3 ? 0 : `=${letter}${product.row + 7}-${previousLetter}${product.row + 7}`],
                     [data.message],
-                    [lastColumn === 3 ? 0 : `=${letter}${product.row + 7}-${previousLetter}${product.row + 7}`]
+                    [lastColumn === 3 ? 0 : `=${letter}${product.row + 9}-${previousLetter}${product.row + 9}`]
                 ]
             });
         });
