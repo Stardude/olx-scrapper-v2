@@ -12,7 +12,8 @@
     "editAdvLink": "div.x-small.lheight16.margintop3.rel > a.editme",
     "priceInput": "#parameter-div-price > div.area.clr > div > div > p > input[type='text'].paramPriceInput",
     "saveAdvBtn": "#save",
-    "confirmWindow": "#body-container > div > div > div.stuffed > div > p"
+    "confirmWindow": "#body-container > div > div > div.stuffed > div > p",
+    "page404": "#body-container > div > div > div.page404"
   },
 
   "Urls": {

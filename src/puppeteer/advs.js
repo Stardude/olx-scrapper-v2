@@ -2,7 +2,7 @@ const config = require('config');
 const fileService = require('../fileService');
 const { getValue } = require('../utils');
 
-const { priceInput, saveAdvBtn, confirmWindow } = config.Selectors;
+const { priceInput, saveAdvBtn, confirmWindow, page404 } = config.Selectors;
 const { host, editAdvPath } = config.Urls;
 const { priceChange, saveBtnClick, closePage, keyboardType } = config.Delays;
 
@@ -28,21 +28,29 @@ const runPromises = async (browser, advsUrls, data) => {
     for (let i = 0; i < advsUrls.length; i++) {
         const advUrl = advsUrls[i];
         const advId = advUrl.match(/\d{9}/g)[0];
-        promisesAdvs.push(new Promise(async (resolve, reject) => {
+        promisesAdvs.push((async () => {
             let page;
             try {
                 page = await browser.newPage();
                 await page.goto(advUrl, {waitUntil: 'load', timeout: 0});
                 try {
+                    await page.waitForSelector(page404, {timeout: 5000});
+                    throw new Error('Page not found');
+                } catch (err) {
+                    if (err.message === 'Page not found') {
+                        throw err;
+                    }
+                }
+
+                try {
                     await page.waitForSelector(priceInput);
                 } catch (err) {
-                    return reject(err);
+                    throw err;
                 }
 
                 if (config.onlyActive && await page.$('#choose-category-button') !== null) {
                     await page.waitFor(closePage);
-                    await page.close();
-                    return resolve();
+                    throw new Error('Adv ' + advId + ' is not active');
                 }
 
                 const elHandle = await page.$(priceInput);
@@ -54,7 +62,8 @@ const runPromises = async (browser, advsUrls, data) => {
                     changePercentage(parseFloat(value), parseFloat(oldValue));
 
                 await page.waitFor(priceChange);
-                await page.click(priceInput);
+                await page.evaluate('window.scrollBy(0, 100)');
+                await page.click(priceInput, { clickCount: 2 });
                 await page.keyboard.down('Control');
                 await page.keyboard.press('A');
                 await page.keyboard.up('Control');
@@ -69,15 +78,13 @@ const runPromises = async (browser, advsUrls, data) => {
                 await page.close();
                 successfulAdvs.push(advId);
                 console.log(`Product ${advId} processed!`);
-                resolve();
             } catch (err) {
                 fileService.log(`Problem in ${advId}: ${err}`);
                 console.error(`Product ${advId} failed!`);
                 await page.close();
                 problematicAdvs.push(advId);
-                resolve();
             }
-        }));
+        })());
     }
 
     try {
