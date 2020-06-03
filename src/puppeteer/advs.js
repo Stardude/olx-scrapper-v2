@@ -1,10 +1,11 @@
 const config = require('config');
+const constants = require('../constants');
 const fileService = require('../fileService');
 const { getValue } = require('../utils');
 
-const { priceInput, saveAdvBtn, confirmWindow, page404 } = config.Selectors;
-const { host, editAdvPath } = config.Urls;
-const { priceChange, saveBtnClick, closePage, keyboardType } = config.Delays;
+const { priceInput, confirmWindow, page404 } = constants.SELECTORS;
+const { host, editAdvPath } = constants.URLs;
+const { priceChange, saveBtnClick, closePage, keyboardType } = constants.DELAYS;
 
 const getAdvsEditUrls = async (advs) => {
     const advsUrls = [];

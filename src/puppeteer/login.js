@@ -1,10 +1,11 @@
 const fs = require('fs').promises;
 const config = require('config');
+const constants = require('../constants');
 const { email, password } = require('../../config/auth').Olx;
 
 const { cookiesFilePath } = config.Authorization;
-const { usernameInput, passwordInput, editAdvLink } = config.Selectors;
-const { host, mainPath } = config.Urls;
+const { usernameInput, passwordInput, editAdvLink } = constants.SELECTORS;
+const { host, mainPath } = constants.URLs;
 
 const useCookies = async (cookiesString, page) => {
     console.log('Setting cookies...');
@@ -38,11 +39,11 @@ module.exports = async (page) => {
     try {
         cookiesString = await fs.readFile(config.Authorization.cookiesFilePath);
         if (cookiesString.toString() !== '') {
-            return await useCookies(cookiesString, page);
+            return useCookies(cookiesString, page);
         } else {
             throw new Error();
         }
     } catch (e) {
-        return await useCredentials(page);
+        return useCredentials(page);
     }
 };

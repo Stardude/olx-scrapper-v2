@@ -15,25 +15,55 @@ class Spreadsheet {
     }
 
     async apply (context, method, params) {
+        params = params || {};
         const getFunc = promisify(context[method]).bind(context);
-        return await getFunc({
+        return getFunc({
             ...params,
+            spreadsheetId: this.spreadsheetId,
             auth: this.jwtClient
         });
     }
 
-    async getSheetId () {
-        const spreadsheetProps = await this.apply(this.spreadsheets,'get', {
-            spreadsheetId: this.spreadsheetId
+    async appendEmptyRows (productsAmount) {
+        const necessaryRowCount = (productsAmount * (this.rowsHeight + this.rowsDividers)) + this.firstProductRow;
+        const availableRowCount = this.rowCount;
+
+        if (necessaryRowCount - availableRowCount <= 0) {
+            return;
+        }
+
+        const rowsAmount = (necessaryRowCount - availableRowCount) + this.rowsHeight + this.rowsDividers;
+
+        await this.apply(this.spreadsheets, 'batchUpdate', {
+            resource: {
+                requests: [
+                    {
+                        appendDimension: {
+                            sheetId: this.sheetId,
+                            dimension: "ROWS",
+                            length: rowsAmount
+                        }
+                    }
+                ]
+            }
         });
-        this.sheetId = spreadsheetProps.data.sheets
-            .find(sheet => sheet.properties.title === this.sheetName).properties.sheetId;
+
+        console.log(`New ${rowsAmount} rows appended to spreadsheet`);
+    }
+
+    async getSheetProperties () {
+        const spreadsheetProps = await this.apply(this.spreadsheets,'get', {});
+        const sheet = spreadsheetProps.data.sheets
+            .find(sheet => sheet.properties.title === this.sheetName);
+
+        this.sheetId = sheet.properties.sheetId;
+        this.rowCount = sheet.properties.gridProperties.rowCount;
+        this.columnCount = sheet.properties.gridProperties.columnCount;
     }
 
     async getProductIds () {
         const range = `${this.sheetName}!A:A`;
         const {data} = await this.apply(this.spreadsheets.values, 'get', {
-            spreadsheetId: this.spreadsheetId,
             range
         });
         this.productIds = data.values ? data.values.map((value, key) => ({ value: value[0], row: key + 1 }))
@@ -41,6 +71,31 @@ class Spreadsheet {
         this.newProductRowPosition = data.values ?
             this.productIds.slice(-1)[0].row - 1 + this.rowsHeight + this.rowsDividers :
             this.firstProductRow;
+    }
+
+    async setCities (statistics) {
+        const requests = [];
+        this.productIds.forEach(product => {
+            const data = statistics[product.value];
+            data && requests.push({
+                range: `${this.sheetName}!A${product.row + 2}`,
+                values: [
+                    [`=IF(COUNTIF(Cities!A1:A1000; "${data.city}") > 0; VLOOKUP("${data.city}"; Cities!A1:B1000; 2; FALSE); "${data.city}")`]
+                ]
+            });
+        });
+
+        try {
+            await this.apply(this.spreadsheets.values, 'batchUpdate', {
+                resource: {
+                    data: requests,
+                    valueInputOption: 'USER_ENTERED'
+                }
+            });
+            console.log('Cities successfully added to spreadsheet!');
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     letter(columnId) {
@@ -88,7 +143,6 @@ class Spreadsheet {
 
         try {
             await this.apply(this.spreadsheets.values, 'batchUpdate', {
-                spreadsheetId: this.spreadsheetId,
                 resource: {
                     data,
                     valueInputOption: 'RAW'
@@ -96,24 +150,22 @@ class Spreadsheet {
             });
 
             await this.apply(this.spreadsheets, 'batchUpdate', {
-                spreadsheetId: this.spreadsheetId,
                 resource: { requests }
             });
-            console.log('Templates for new products created!');
+            console.log(`Templates for new ${newProducts.length} products created!`);
         } catch (e) {
             console.error(e);
         }
     }
 
     getCurrentDate () {
-        return `${('0' + new Date().getDate()).slice(-2)}.${('0' + new Date().getMonth() + 1).slice(-2)}`;
+        return `${('0' + new Date().getDate()).slice(-2)}.${('0' + (+(new Date().getMonth()) + 1)).slice(-2)}`;
     }
 
     async getLastColumn () {
         const range = `${this.sheetName}!A3:ZZ${this.productIds.slice(-1)[0].row + this.rowsHeight - 2}`;
         try {
             const {data} = await this.apply(this.spreadsheets.values, 'get', {
-                spreadsheetId: this.spreadsheetId,
                 range
             });
 
@@ -158,7 +210,6 @@ class Spreadsheet {
 
         try {
             await this.apply(this.spreadsheets.values, 'batchUpdate', {
-                spreadsheetId: this.spreadsheetId,
                 resource: {
                     data: requests,
                     valueInputOption: 'USER_ENTERED'
@@ -171,7 +222,7 @@ class Spreadsheet {
     }
 
     async writeData (statistics) {
-        await this.getSheetId();
+        await this.getSheetProperties();
         await this.getProductIds();
 
         const newProducts = [];
@@ -182,8 +233,14 @@ class Spreadsheet {
             }
         }
 
+        await this.appendEmptyRows([
+            ...this.productIds,
+            ...newProducts
+        ].length);
+
         await this.createNewTemplates(newProducts);
         await this.addNewStatistics(statistics);
+        await this.setCities(statistics);
     }
 }
 

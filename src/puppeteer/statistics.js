@@ -1,9 +1,8 @@
-const config = require('config');
-const { getValue } = require('../utils');
+const constants = require('../constants');
+const { getValue, getDataFeaturesAttribute } = require('../utils');
 
-const { editAdvLink, pagination, statistics } = config.Selectors;
-const { host, mainPath } = config.Urls;
-const { priceChange, saveBtnClick, closePage, keyboardType } = config.Delays;
+const { editAdvLink, pagination, views, phones, chosen, message, city } = constants.SELECTORS;
+const { host, mainPath } = constants.URLs;
 
 const getAdvIds = async page => {
     const editLinks = await page.$$(editAdvLink);
@@ -26,6 +25,24 @@ const getAdvStatistics = async (page, statSelector) => {
     return statisticData;
 };
 
+const getCity = async (page, citySelector) => {
+    const citiesRows = await page.$$(citySelector);
+    const citiesData = [];
+    for (let i = 0; i < citiesRows.length; i++) {
+        const citiesRow = citiesRows[i];
+        const dataFeatures = await getDataFeaturesAttribute(page, citiesRow);
+
+        try {
+            const parsedData = JSON.parse(dataFeatures)["city_name"];
+            citiesData.push(parsedData);
+        } catch (err) {
+            citiesData.push(null);
+        }
+    }
+
+    return citiesData;
+};
+
 const prepareResult = (result, advIdsOnPage, advStatistics) => {
     advIdsOnPage.forEach((advId, index) => {
         if (!result[advId]) {
@@ -33,51 +50,49 @@ const prepareResult = (result, advIdsOnPage, advStatistics) => {
                 views: advStatistics[0][index],
                 phones: advStatistics[1][index],
                 chosen: advStatistics[2][index],
-                message: advStatistics[3][index].trim()
+                message: advStatistics[3][index].trim(),
+                city: advStatistics[4][index]
             };
         }
     });
+};
+
+const fetchByAdvType = async (acc, page, advType) => {
+    let paginationHandlers = [];
+    let pageNumber = 1;
+    let pageUrl = null;
+
+    do {
+        pageUrl = host + mainPath + `/${advType}?page=${pageNumber}`;
+        await page.goto(pageUrl, {waitUntil: 'load', timeout: 0});
+        if (paginationHandlers.length === 0) {
+            paginationHandlers = await page.$$(pagination);
+        }
+
+        let advIdsOnPage = await getAdvIds(page);
+        let advStatistics = [
+            await getAdvStatistics(page, views),
+            await getAdvStatistics(page, phones),
+            await getAdvStatistics(page, chosen),
+            await getAdvStatistics(page, message),
+            await getCity(page, city)
+        ];
+        prepareResult(acc, advIdsOnPage, advStatistics);
+
+        pageNumber++;
+    } while (pageNumber <= paginationHandlers.length);
 };
 
 module.exports = {
     fetch: async (browser) => {
         try {
             const result = {};
-            let pageUrl = host + mainPath + '/active?page=1';
             const page = await browser.newPage();
-            await page.goto(pageUrl, {waitUntil: 'load', timeout: 0});
-            let paginationHandlers = await page.$$(pagination);
-            for (let i = 2; i <= paginationHandlers.length; i++) {
-                let advIdsOnPage = await getAdvIds(page);
-                let advStatistics = [
-                    await getAdvStatistics(page, `${statistics} > ul > li:nth-child(2) > span`),
-                    await getAdvStatistics(page, `${statistics} > ul > li:nth-child(3) > span`),
-                    await getAdvStatistics(page, `${statistics} > ul > li:nth-child(4) > span`),
-                    await getAdvStatistics(page, `${statistics} > div.myoffersnew__messages span.inlblk`)
-                ];
-                prepareResult(result, advIdsOnPage, advStatistics);
 
-                pageUrl = host + mainPath + `/active?page=${i}`;
-                await page.goto(pageUrl, {waitUntil: 'load', timeout: 0});
-            }
+            await fetchByAdvType(result, page, 'active');
+            await fetchByAdvType(result, page, 'archive');
 
-            pageUrl = host + mainPath + '/archive?page=1';
-            await page.goto(pageUrl, {waitUntil: 'load', timeout: 0});
-            paginationHandlers = await page.$$(pagination);
-            for (let i = 2; i <= paginationHandlers.length; i++) {
-                let advIdsOnPage = await getAdvIds(page);
-                let advStatistics = [
-                    await getAdvStatistics(page, `${statistics} > ul > li:nth-child(2) > span`),
-                    await getAdvStatistics(page, `${statistics} > ul > li:nth-child(3) > span`),
-                    await getAdvStatistics(page, `${statistics} > ul > li:nth-child(4) > span`),
-                    await getAdvStatistics(page, `${statistics} > div.myoffersnew__messages span.inlblk`)
-                ];
-                prepareResult(result, advIdsOnPage, advStatistics);
-
-                pageUrl = host + mainPath + `/archive?page=${i}`;
-                await page.goto(pageUrl, {waitUntil: 'load', timeout: 0});
-            }
-            console.log('Statistics for all active products fetched!');
+            console.log(`Statistics for all products fetched! Total amount: ${Object.keys(result).length}`);
             return result;
         } catch (e) {
             console.error(e);

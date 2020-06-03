@@ -15,11 +15,11 @@ const launch = async () => {
 };
 
 const changePrice = async data => {
-    return await advs.editAll(browser, data);
+    return advs.editAll(browser, data);
 };
 
 const fetchStatistics = async () => {
-    return await statistics.fetch(browser);
+    return statistics.fetch(browser);
 };
 
 const close = async () => {

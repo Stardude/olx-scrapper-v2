@@ -27,13 +27,13 @@ app.post('/close', async (req, res) => {
     res.sendStatus(201);
 });
 
-app.get('/categories', async (req, res) => {
-    const result = await fileService.getListOfAdvs();
+app.get('/categories', (req, res) => {
+    const result = fileService.getListOfAdvs();
     res.send(result);
 });
 
-app.post('/categories/:category', async (req, res) => {
-    const result = await fileService.updateCategoryList(req.params.category, req.body);
+app.post('/categories/:category', (req, res) => {
+    const result = fileService.updateCategoryList(req.params.category, req.body);
     res.send(result);
 });
 
