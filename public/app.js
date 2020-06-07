@@ -63,7 +63,7 @@
 
            $scope.data.btnsDisabled = false;
            el.value = 0;
-           i !== 0 && $scope.$apply();
+           $scope.$apply();
        };
 
        $scope.addItem = category => {
