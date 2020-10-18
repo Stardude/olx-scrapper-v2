@@ -1,44 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app">
 <head>
     <meta charset="UTF-8">
     <title>OLX SCRAPER</title>
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="https://unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css" />
     <script src="app.js"></script>
+    <script src="controllers/CategoriesController.js"></script>
+    <script src="controllers/RecordsController.js"></script>
+    <script src="controllers/CitiesController.js"></script>
+    <script src="controllers/StatisticsController.js"></script>
+    <script src="controllers/ConfigurationController.js"></script>
 </head>
-<body ng-app="app" ng-controller="MainCtrl">
-    <div class="statistics">
-        <input type="button" value="Collect and Save Statistics" ng-click="fetchStatistics()" ng-disabled="data.btnsDisabled" />
-    </div>
-    <div class="categories">
-        <div class="category" ng-repeat="(category, items) in data.advs">
-            <h3 align="center">Category: {{category}}</h3>
-            <div class="scroll-bar">
-                <ul>
-                    <li ng-repeat="adv in items" class="adv">
-                        <div ng-if="adv">
-                            <input type="checkbox" ng-model="adv.checked" />
-                            <span ng-if="!adv.new" ng-class="{red: adv.problematic, green: adv.successful}">{{adv.id}}: {{adv.name}}</span>
-                            <input ng-if="adv.new" class="input" type="text" ng-model="adv.id" />
-                            <input ng-if="adv.new" class="input" ng-model="adv.name" type="text" />
-                            <input type="button" class="remove-button" value="X" ng-click="removeItem(category, adv.index)" />
-                        </div>
-                    </li>
-                </ul>
+<body ng-controller="MainCtrl">
+    <div id="sidebar">
+        <div class="menu">
+            <div class="menu-items" ng-repeat="menu in MENU_ITEMS">
+                <span ui-sref="{{menu.state}}">{{menu.label}}</span>
             </div>
-            <input type="button" value="Add" ng-click="addItem(category)" ng-disabled="data.btnsDisabled" />
-            <input type="button" value="Update" ng-click="update(category)" ng-disabled="updateDisabled(category)" />
-            <input type="button" ng-if="!data.checked[category]" value="Mark all" ng-click="toggleCheckboxes(category)" ng-disabled="data.btnsDisabled" />
-            <input type="button" ng-if="data.checked[category]" value="Clear all" ng-click="toggleCheckboxes(category)" ng-disabled="data.btnsDisabled" />
-            <br/><br/>
-            <input type="text" class="input" id="{{category}}_fixed" value="0" />
-            <input type="button" value="Change (fixed)" ng-click="changePrice(category, 'fixed')" ng-disabled="data.btnsDisabled" />
-            <br/><br/>
-            <input type="text" class="input" id="{{category}}_percentage" value="0" />
-            <input type="button" value="Change (%)" ng-click="changePrice(category, 'percentage')" ng-disabled="data.btnsDisabled" />
         </div>
+    </div>
+    <div id="main">
+        <div class="inner-main" ui-view></div>
     </div>
 </body>
 </html>

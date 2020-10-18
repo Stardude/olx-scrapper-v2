@@ -1,0 +1,61 @@
+<div class="outer">
+    <div class="title-outer">
+        <div class="title">НАЛАШТУВАННЯ</div>
+        <div class="button-section">
+            <input type="button" value="Оновити" ng-click="updateConfiguration()" ng-disabled="!isChanged()"/>
+        </div>
+    </div>
+    <div class="configuration">
+        <div class="section">
+            <div class="header">ЗМІНА ЦІН</div>
+            <div class="row">
+                <div class="title">К-сть оголошень за ітерацію</div>
+                <input class="value" type="number" value="{{data.configuration.priceChangeAdvsAmount}}" ng-model="data.configuration.priceChangeAdvsAmount" />
+            </div>
+            <div class="row">
+                <div class="title">Обробляти лише активні оголошення</div>
+                <input class="value" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="data.configuration.priceChangeOnlyActive" />
+            </div>
+        </div>
+        <div class="section">
+            <div class="header">СТАТИСТИКА</div>
+            <div class="row">
+                <div class="title">Збирати лише з активних оголошень</div>
+                <input class="value" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="data.configuration.statisticsOnlyActive" />
+            </div>
+        </div>
+        <div class="section">
+            <div class="header">МІСТА</div>
+            <div class="row">
+                <div class="title">К-сть міст за ітерацію</div>
+                <input class="value" type="number" value="{{data.configuration.citiesAmount}}" ng-model="data.configuration.citiesAmount" />
+            </div>
+        </div>
+        <div class="section">
+            <div class="header">АВТОРИЗАЦІЯ</div>
+            <div class="row">
+                <div class="title">Е-мейл</div>
+                <input class="value" type="text" value="{{data.configuration.olxEmail}}" ng-model="data.configuration.olxEmail" />
+            </div>
+            <div class="row">
+                <div class="title">Пароль</div>
+                <input class="value" type="password" value="{{data.configuration.olxPassword}}" ng-model="data.configuration.olxPassword" />
+            </div>
+        </div>
+        <div class="section">
+            <div class="header">GOOGLE</div>
+            <div class="row">
+                <div class="title">ID таблиці Excel</div>
+                <input class="value" type="text" value="{{data.configuration.googleSpreadsheetId}}" ng-model="data.configuration.googleSpreadsheetId" />
+            </div>
+            <div class="row">
+                <div class="title">Назва вкладки для статистики оголошень</div>
+                <input class="value" type="text" value="{{data.configuration.googleRecordsSheetName}}" ng-model="data.configuration.googleRecordsSheetName" />
+            </div>
+            <div class="row">
+                <div class="title">Назва вкладки для статистики міст</div>
+                <input class="value" type="text" value="{{data.configuration.googleCitiesSheetName}}" ng-model="data.configuration.googleCitiesSheetName" />
+            </div>
+        </div>
+    </div>
+</div>

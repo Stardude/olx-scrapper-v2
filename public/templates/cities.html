@@ -1,0 +1,56 @@
+<div class="outer">
+    <div class="title-outer">
+        <div class="title">МІСТА</div>
+        <div class="button-section">
+            <input type="button" value="Відмітити всі" ng-click="toggleCheckboxes(true)" style="margin-bottom: 0.2rem"/>
+            <input type="button" value="Зняти всі" ng-click="toggleCheckboxes(false)" />
+        </div>
+        <div class="button-section">
+            <input type="button" value="Зібрати" ng-click="collectStatistics()" style="margin-bottom: 0.2rem"/>
+            <input type="button" value="Зберегти в Excel" ng-click="storeToExcel()" style="margin-bottom: 0.2rem" />
+            <input type="button" value="Зібрати + Зберегти в Excel" ng-click="collectAndStore()" />
+        </div>
+    </div>
+    <div class="cities">
+        <div class="cities-item">
+            <div style="display: inline-block; width: 1.5rem"> </div>
+            <div class="cities-item-inner">
+                <span class="city-info" ng-click="sortBy('olxId')">Код міста - Назва міста{{getSortIcon('olxId')}}</span>
+                <span class="city-date" ng-click="sortBy('dateOfChecking')">Дата перевірки{{getSortIcon('dateOfChecking')}}</span>
+                <span class="city-stat" ng-click="sortBy('generalAmount')">Загальна{{getSortIcon('generalAmount')}}</span>
+                <span class="city-stat" ng-click="sortBy('topAmount')">Топ{{getSortIcon('topAmount')}}</span>
+                <span class="city-stat" ng-click="sortBy('myGeneralAmount')">Моїх загальна{{getSortIcon('myGeneralAmount')}}</span>
+                <span class="city-stat" ng-click="sortBy('myTopAmount')">Моїх топ{{getSortIcon('myTopAmount')}}</span>
+                <div style="display: inline-block; width: 2rem"> </div>
+            </div>
+        </div>
+        <div class="cities-item" ng-repeat="city in data.cities">
+            <input class="city-checkbox" type="checkbox" ng-model="city.checked" />
+            <div ng-if="!city.isEdit && !city.isNew" class="cities-item-inner">
+                <span class="city-info">{{city.olxId}} - {{city.name}}</span>
+                <span class="city-date">{{city.dateOfChecking ? formatDate(city.dateOfChecking) : "-----"}}</span>
+                <span class="city-stat">{{city.generalAmount || "---"}}</span>
+                <span class="city-stat">{{city.topAmount || "---"}}</span>
+                <span class="city-stat">{{city.myGeneralAmount || "---"}}</span>
+                <span class="city-stat">{{city.myTopAmount || "---"}}</span>
+                <div style="display: inline-block; width: 2rem"> </div>
+                <div class="icon-edit" ng-click="editCity(city); $event.stopPropagation();"></div>
+                <div class="icon-delete" ng-click="deleteCity(city); $event.stopPropagation();"></div>
+            </div>
+            <div ng-if="city.isEdit || city.isNew" class="cities-item-inner">
+                <input type="text" class="olxId-input" maxlength="9" value="{{city.olxId}}" ng-model="city.olxId" ng-click="$event.stopPropagation();"/>
+                <span> - </span>
+                <input type="text" class="name-input" value="{{city.name}}" ng-model="city.name" ng-click="$event.stopPropagation();"/>
+                <div style="display: inline-block; width: 3rem"> </div>
+                <div class="icon-save" ng-click="saveCity(city); $event.stopPropagation();"></div>
+                <div class="icon-cancel" ng-click="cancelCity(city); $event.stopPropagation();"></div>
+            </div>
+        </div>
+        <div class="cities-item" ng-click="addCity()">
+            <div style="display: inline-block; width: 1.5rem"> </div>
+            <div class="cities-item-inner">
+                + Нове місто
+            </div>
+        </div>
+    </div>
+</div>

@@ -9,5 +9,12 @@ module.exports = {
             elHandle => elHandle.getAttribute('data-features'),
             elHandle
         );
+    },
+
+    getDataFacetsAttribute: async (page, elHandle) => {
+        return page.evaluate(
+            elHandle => elHandle.getAttribute('data-facets'),
+            elHandle
+        );
     }
 };

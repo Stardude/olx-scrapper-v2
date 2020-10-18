@@ -1,15 +1,14 @@
 {
-  "Authorization": {
-    "cookiesFilePath": "./cookies.json"
+  "Application": {
+    "port": 7777
   },
 
-  "Categories": [
-    "winter",
-    "summer",
-    "spring",
-    "discounts"
-  ],
+  "Database": {
+    "TYPE": "sqlite",
+    "PATH": "database/olx-db"
+  },
 
-  "advsAmountPerIteration": 3,
-  "onlyActive": true
+  "Authorization": {
+    "cookiesFilePath": "cookies.json"
+  }
 }

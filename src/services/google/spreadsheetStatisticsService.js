@@ -1,6 +1,7 @@
 const {google} = require('googleapis');
 const {promisify} = require('util');
 const formatHelper = require('./formatHelper');
+const logger = require('../../utils/logger')('SPREADSHEET_STATISTICS');
 
 class Spreadsheet {
     constructor (spreadsheetId, sheetName, jwtClient) {
@@ -48,7 +49,7 @@ class Spreadsheet {
             }
         });
 
-        console.log(`New ${rowsAmount} rows appended to spreadsheet`);
+        logger.info(`New ${rowsAmount} rows appended to spreadsheet`);
     }
 
     async getSheetProperties () {
@@ -80,7 +81,7 @@ class Spreadsheet {
             data && requests.push({
                 range: `${this.sheetName}!A${product.row + 2}`,
                 values: [
-                    [`=IF(COUNTIF(Cities!A1:A1000; "${data.city}") > 0; VLOOKUP("${data.city}"; Cities!A1:B1000; 2; FALSE); "${data.city}")`]
+                    [data.cityName]
                 ]
             });
         });
@@ -92,9 +93,10 @@ class Spreadsheet {
                     valueInputOption: 'USER_ENTERED'
                 }
             });
-            console.log('Cities successfully added to spreadsheet!');
+            logger.info('Cities successfully added to spreadsheet!');
         } catch (e) {
-            console.error(e)
+            logger.error(`An error occurred during adding cities tp spreadsheet: ${e}`);
+            throw e;
         }
     }
 
@@ -152,9 +154,10 @@ class Spreadsheet {
             await this.apply(this.spreadsheets, 'batchUpdate', {
                 resource: { requests }
             });
-            console.log(`Templates for new ${newProducts.length} products created!`);
+            logger.info(`Templates for new ${newProducts.length} products created!`);
         } catch (e) {
-            console.error(e);
+            logger.error(`An error occurred during creating templates for new product: ${e}`);
+            throw e;
         }
     }
 
@@ -176,7 +179,8 @@ class Spreadsheet {
 
             return ++lastColumn;
         } catch (e) {
-            console.error(e);
+            logger.error(`Can't get last column: ${e}`);
+            throw e;
         }
     }
 
@@ -200,9 +204,9 @@ class Spreadsheet {
                     [lastColumn === 3 ? 0 : `=${letter}${product.row + 3}-${previousLetter}${product.row + 3}`],
                     [data.phones],
                     [lastColumn === 3 ? 0 : `=${letter}${product.row + 5}-${previousLetter}${product.row + 5}`],
-                    [data.chosen],
+                    [data.chosens],
                     [lastColumn === 3 ? 0 : `=${letter}${product.row + 7}-${previousLetter}${product.row + 7}`],
-                    [data.message],
+                    [data.messages],
                     [lastColumn === 3 ? 0 : `=${letter}${product.row + 9}-${previousLetter}${product.row + 9}`]
                 ]
             });
@@ -215,9 +219,10 @@ class Spreadsheet {
                     valueInputOption: 'USER_ENTERED'
                 }
             });
-            console.log('Statistics successfully stored in spreadsheet!');
+            logger.info('Statistics successfully stored in spreadsheet!');
         } catch (e) {
-            console.error(e)
+            logger.error(`An error occurred during writing statistics: ${e}`);
+            throw e;
         }
     }
 

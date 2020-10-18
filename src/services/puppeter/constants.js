@@ -8,6 +8,7 @@ module.exports = {
         saveAdvBtn: "#save",
         confirmWindow: "#body-container > div > div > div > div.confirm-polaroid__main",
         page404: "#body-container > div > div > div.page404",
+        cityAmount: "#body-container",
 
         views: "#adsTable > div.tbody > div > div.myoffersnew__item > div.myoffersnew__cell.myoffersnew__cell--content > div.myoffersnew__details > ul > li:nth-child(2) > span",
         phones: "#adsTable > div.tbody > div > div.myoffersnew__item > div.myoffersnew__cell.myoffersnew__cell--content > div.myoffersnew__details > ul > li:nth-child(3) > span",
@@ -19,6 +20,8 @@ module.exports = {
     URLs: {
         host: "http://www.olx.ua/uk",
         mainPath: "/myaccount",
+        categoryPath: "/moda-i-stil/odezhda/muzhskaya-obuv",
+        cityTopQuery: "?search%5Bpaidads_listing%5D=1",
         editAdvPath: "/post-new-ad/edit/<CODE>/?bs=myaccount_edit&ref%5B0%5D%5Bpath%5D%5B0%5D=archive&ref%5B0%5D%5Baction%5D=myaccount&ref%5B0%5D%5Bmethod%5D=index"
     },
 

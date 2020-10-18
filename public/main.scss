@@ -1,0 +1,339 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+    min-height: 100%;
+    width: 100%;
+    font-family: "Open Sans";
+    font-size: 12pt;
+}
+
+#sidebar {
+    background: #c5c5c5;
+    padding: 0.5rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+#main {
+    background: #f0f0f0;
+    flex-grow: 6;
+    padding: 0.5rem 0.5rem;
+}
+.outer {
+    padding: 0.5rem 0.5rem;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+
+    .menu-items {
+        margin: 0.3rem 0;
+        padding: 0.3rem 0.8rem;
+        display: flex;
+        justify-content: start;
+        font-weight: bold;
+        cursor: pointer;
+        color: black;
+
+        &:hover {
+            color: #606060;
+            background-color: #f0f0f0;
+        }
+    }
+}
+
+.title-outer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    .title {
+        margin: 0 0 2rem 0;
+        font-size: 2em;
+        font-weight: bold;
+    }
+
+    .button-section {
+        margin: 0 2rem;
+        display: flex;
+        flex-direction: column;
+
+        .title-input {
+            margin: 0 0 0.3rem 0;
+            text-align: center;
+            font-weight: bold;
+            width: 9rem;
+        }
+    }
+}
+
+.icon-edit {
+    background-image: url("https://icons-for-free.com/iconfiles/png/512/edit+icon-1320166902506410056.png");
+}
+.icon-delete {
+    background-image: url("https://icons-for-free.com/iconfiles/png/512/delete+remove+trash+trash+bin+trash+can+icon-1320073117929397588.png");
+}
+.icon-save {
+    background-image: url("https://icons-for-free.com/iconfiles/png/512/save-1321215625037841495.png");
+}
+.icon-cancel {
+    background-image: url("https://icons-for-free.com/iconfiles/png/512/cancel-131964784714462788.png");
+}
+.icon-edit,
+.icon-delete,
+.icon-save,
+.icon-cancel
+{
+    display: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-size: cover;
+
+    &:hover {
+        background-color: #adadad;
+    }
+}
+
+input[type="text"], input[type="number"], input[type="password"] {
+    outline: none;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid black;
+    font-family: "Open Sans";
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.categories {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    .categories-item {
+        width: 10rem;
+        height: 10rem;
+        background-color: #c5c5c5;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        margin: 0 2rem;
+        font-weight: bold;
+        box-shadow: 0 0 3px 0px;
+        cursor: pointer;
+        position: relative;
+
+        &:hover .icon-edit,
+        &:hover .icon-delete,
+        &:hover .icon-save,
+        &:hover .icon-cancel
+        {
+            display: block;
+        }
+
+        .categories-item-inner {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+        }
+
+        .icon-edit, .icon-save {
+            position: absolute;
+            top: 0.3rem;
+            right: 1.9rem;
+        }
+        .icon-delete, .icon-cancel {
+            position: absolute;
+            top: 0.3rem;
+            right: 0.3rem;
+        }
+
+        .symbol-cross {
+            font-size: 50pt;
+            font-weight: lighter;
+        }
+
+        input[type="text"] {
+            font-size: 12pt;
+            font-weight: bold;
+            width: 80%;
+            text-align: center;
+            display: inline;
+        }
+    }
+}
+
+.records {
+    height: 30rem;
+    flex-wrap: wrap;
+}
+
+.records, .cities {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+
+    .records-item, .cities-item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        align-content: flex-start;
+        justify-content: flex-start;
+        margin: 0.5rem 2rem 0.5rem 0.5rem;
+        cursor: pointer;
+        position: relative;
+
+        .record-checkbox, .city-checkbox {
+            margin-right: 0.5rem;
+        }
+
+        .records-item-inner, .cities-item-inner {
+            padding: 0.5rem;
+            background-color: #c5c5c5;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            align-content: flex-start;
+            justify-content: flex-start;
+            font-weight: bold;
+            box-shadow: 0 0 3px 0px;
+            cursor: pointer;
+            position: relative;
+            font-size: 10pt;
+
+            &:hover .icon-edit,
+            &:hover .icon-delete,
+            &:hover .icon-save,
+            &:hover .icon-cancel
+            {
+                display: block;
+            }
+
+            .icon-edit, .icon-save {
+                position: absolute;
+                top: 0.3rem;
+                right: 1.9rem;
+            }
+            .icon-delete, .icon-cancel {
+                position: absolute;
+                top: 0.3rem;
+                right: 0.3rem;
+            }
+
+            .olxId-input {
+                font-size: 10pt;
+                font-weight: bold;
+                width: 4.25rem;
+                text-align: left;
+                display: inline;
+            }
+            .name-input {
+                font-size: 10pt;
+                font-weight: bold;
+                width: 5rem;
+                text-align: left;
+                display: inline;
+            }
+
+            .record-info, .city-info, .city-date, .city-stat {
+                display: inline-block;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .record-info {
+                width: 10rem;
+            }
+            .city-info {
+                width: 14rem;
+            }
+            .city-date, .record-date {
+                width: 9rem;
+            }
+            .city-stat {
+                text-align: center;
+                width: 8rem;
+            }
+        }
+    }
+}
+
+.statistics {
+    margin-top: 1rem;
+
+    table {
+        border-collapse: collapse;
+        font-size: 10pt;
+        font-weight: bold;
+
+        tr.header {
+            border-bottom: 3px solid black;
+        }
+        tr.tr-border-bottom {
+            border-bottom: 1px solid black;
+        }
+
+        td {
+            padding: 0.5rem;
+            text-align: center;
+            border-right: 2px solid black;
+        }
+
+        .sort {
+            font-size: 12pt;
+            cursor: pointer;
+        }
+    }
+}
+
+.configuration {
+    margin-top: 1rem;
+    font-weight: bold;
+
+    .section {
+        margin: 0.5rem 0;
+        padding: 0.5rem;
+        border-bottom: 1px solid black;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 0.5rem 0;
+
+            .title {
+                width: 25rem;
+            }
+
+            input[type="text"], input[type="number"], input[type="password"] {
+                font-weight: bold;
+                width: 15rem;
+            }
+        }
+
+
+    }
+}

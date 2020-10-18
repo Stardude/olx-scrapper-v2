@@ -1,65 +1,283 @@
-.categories {
+html, body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+  min-height: 100%;
+  width: 100%;
+  font-family: "Open Sans";
+  font-size: 12pt; }
+
+#sidebar {
+  background: #c5c5c5;
+  padding: 0.5rem 0;
+  display: flex;
+  justify-content: center; }
+
+#main {
+  background: #f0f0f0;
+  flex-grow: 6;
+  padding: 0.5rem 0.5rem; }
+
+.outer {
+  padding: 0.5rem 0.5rem; }
+
+.menu {
+  display: flex;
+  flex-direction: column; }
+  .menu .menu-items {
+    margin: 0.3rem 0;
+    padding: 0.3rem 0.8rem;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-.category {
-    min-width: 280px;
-    min-height: 300px;
-    border: 1px #CCC solid;
-    box-shadow: inset 0px 11px 8px -10px #CCC, inset 0px -11px 8px -10px #CCC;
-    padding: 5px;
-}
-
-.input {
-    width: 70px;
-}
-
-.remove-button {
-    border-radius: 50%;
-    outline: none;
-    background: #CCC;
-    color: black;
-    width: 20px;
-    height: 20px;
-    font-size: 10px;
-    transition: 0.3s;
-    margin: -5px 0px;
-}
-
-.remove-button:hover {
+    justify-content: start;
+    font-weight: bold;
     cursor: pointer;
-    background: #cc786b;
-}
+    color: black; }
+    .menu .menu-items:hover {
+      color: #606060;
+      background-color: #f0f0f0; }
 
-.adv {
-    margin: 5px 0px;
-}
+.title-outer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start; }
+  .title-outer .title {
+    margin: 0 0 2rem 0;
+    font-size: 2em;
+    font-weight: bold; }
+  .title-outer .button-section {
+    margin: 0 2rem;
+    display: flex;
+    flex-direction: column; }
+    .title-outer .button-section .title-input {
+      margin: 0 0 0.3rem 0;
+      text-align: center;
+      font-weight: bold;
+      width: 9rem; }
 
-.input-long {
-    width: 120px;
-}
+.icon-edit {
+  background-image: url("https://icons-for-free.com/iconfiles/png/512/edit+icon-1320166902506410056.png"); }
+
+.icon-delete {
+  background-image: url("https://icons-for-free.com/iconfiles/png/512/delete+remove+trash+trash+bin+trash+can+icon-1320073117929397588.png"); }
+
+.icon-save {
+  background-image: url("https://icons-for-free.com/iconfiles/png/512/save-1321215625037841495.png"); }
+
+.icon-cancel {
+  background-image: url("https://icons-for-free.com/iconfiles/png/512/cancel-131964784714462788.png"); }
+
+.icon-edit,
+.icon-delete,
+.icon-save,
+.icon-cancel {
+  display: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-size: cover; }
+  .icon-edit:hover,
+  .icon-delete:hover,
+  .icon-save:hover,
+  .icon-cancel:hover {
+    background-color: #adadad; }
+
+input[type="text"], input[type="number"], input[type="password"] {
+  outline: none;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid black;
+  font-family: "Open Sans"; }
 
 .red {
-    color: red;
-    font-weight: bold;
-}
+  color: red; }
 
 .green {
-    color: green;
-    font-weight: bold;
-}
+  color: green; }
 
-.scroll-bar {
-    height: 350px;
-    overflow: auto;
-    box-shadow: 0 8px 6px -6px #888, 0 -8px 6px -6px #888;
-    margin: 15px 0px;
-}
+.categories {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start; }
+  .categories .categories-item {
+    width: 10rem;
+    height: 10rem;
+    background-color: #c5c5c5;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    margin: 0 2rem;
+    font-weight: bold;
+    box-shadow: 0 0 3px 0px;
+    cursor: pointer;
+    position: relative; }
+    .categories .categories-item:hover .icon-edit,
+    .categories .categories-item:hover .icon-delete,
+    .categories .categories-item:hover .icon-save,
+    .categories .categories-item:hover .icon-cancel {
+      display: block; }
+    .categories .categories-item .categories-item-inner {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      align-content: center;
+      justify-content: center; }
+    .categories .categories-item .icon-edit, .categories .categories-item .icon-save {
+      position: absolute;
+      top: 0.3rem;
+      right: 1.9rem; }
+    .categories .categories-item .icon-delete, .categories .categories-item .icon-cancel {
+      position: absolute;
+      top: 0.3rem;
+      right: 0.3rem; }
+    .categories .categories-item .symbol-cross {
+      font-size: 50pt;
+      font-weight: lighter; }
+    .categories .categories-item input[type="text"] {
+      font-size: 12pt;
+      font-weight: bold;
+      width: 80%;
+      text-align: center;
+      display: inline; }
+
+.records {
+  height: 30rem;
+  flex-wrap: wrap; }
+
+.records, .cities {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start; }
+  .records .records-item, .records .cities-item, .cities .records-item, .cities .cities-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: flex-start;
+    justify-content: flex-start;
+    margin: 0.5rem 2rem 0.5rem 0.5rem;
+    cursor: pointer;
+    position: relative; }
+    .records .records-item .record-checkbox, .records .records-item .city-checkbox, .records .cities-item .record-checkbox, .records .cities-item .city-checkbox, .cities .records-item .record-checkbox, .cities .records-item .city-checkbox, .cities .cities-item .record-checkbox, .cities .cities-item .city-checkbox {
+      margin-right: 0.5rem; }
+    .records .records-item .records-item-inner, .records .records-item .cities-item-inner, .records .cities-item .records-item-inner, .records .cities-item .cities-item-inner, .cities .records-item .records-item-inner, .cities .records-item .cities-item-inner, .cities .cities-item .records-item-inner, .cities .cities-item .cities-item-inner {
+      padding: 0.5rem;
+      background-color: #c5c5c5;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      align-content: flex-start;
+      justify-content: flex-start;
+      font-weight: bold;
+      box-shadow: 0 0 3px 0px;
+      cursor: pointer;
+      position: relative;
+      font-size: 10pt; }
+      .records .records-item .records-item-inner:hover .icon-edit,
+      .records .records-item .records-item-inner:hover .icon-delete,
+      .records .records-item .records-item-inner:hover .icon-save,
+      .records .records-item .records-item-inner:hover .icon-cancel, .records .records-item .cities-item-inner:hover .icon-edit,
+      .records .records-item .cities-item-inner:hover .icon-delete,
+      .records .records-item .cities-item-inner:hover .icon-save,
+      .records .records-item .cities-item-inner:hover .icon-cancel, .records .cities-item .records-item-inner:hover .icon-edit,
+      .records .cities-item .records-item-inner:hover .icon-delete,
+      .records .cities-item .records-item-inner:hover .icon-save,
+      .records .cities-item .records-item-inner:hover .icon-cancel, .records .cities-item .cities-item-inner:hover .icon-edit,
+      .records .cities-item .cities-item-inner:hover .icon-delete,
+      .records .cities-item .cities-item-inner:hover .icon-save,
+      .records .cities-item .cities-item-inner:hover .icon-cancel, .cities .records-item .records-item-inner:hover .icon-edit,
+      .cities .records-item .records-item-inner:hover .icon-delete,
+      .cities .records-item .records-item-inner:hover .icon-save,
+      .cities .records-item .records-item-inner:hover .icon-cancel, .cities .records-item .cities-item-inner:hover .icon-edit,
+      .cities .records-item .cities-item-inner:hover .icon-delete,
+      .cities .records-item .cities-item-inner:hover .icon-save,
+      .cities .records-item .cities-item-inner:hover .icon-cancel, .cities .cities-item .records-item-inner:hover .icon-edit,
+      .cities .cities-item .records-item-inner:hover .icon-delete,
+      .cities .cities-item .records-item-inner:hover .icon-save,
+      .cities .cities-item .records-item-inner:hover .icon-cancel, .cities .cities-item .cities-item-inner:hover .icon-edit,
+      .cities .cities-item .cities-item-inner:hover .icon-delete,
+      .cities .cities-item .cities-item-inner:hover .icon-save,
+      .cities .cities-item .cities-item-inner:hover .icon-cancel {
+        display: block; }
+      .records .records-item .records-item-inner .icon-edit, .records .records-item .records-item-inner .icon-save, .records .records-item .cities-item-inner .icon-edit, .records .records-item .cities-item-inner .icon-save, .records .cities-item .records-item-inner .icon-edit, .records .cities-item .records-item-inner .icon-save, .records .cities-item .cities-item-inner .icon-edit, .records .cities-item .cities-item-inner .icon-save, .cities .records-item .records-item-inner .icon-edit, .cities .records-item .records-item-inner .icon-save, .cities .records-item .cities-item-inner .icon-edit, .cities .records-item .cities-item-inner .icon-save, .cities .cities-item .records-item-inner .icon-edit, .cities .cities-item .records-item-inner .icon-save, .cities .cities-item .cities-item-inner .icon-edit, .cities .cities-item .cities-item-inner .icon-save {
+        position: absolute;
+        top: 0.3rem;
+        right: 1.9rem; }
+      .records .records-item .records-item-inner .icon-delete, .records .records-item .records-item-inner .icon-cancel, .records .records-item .cities-item-inner .icon-delete, .records .records-item .cities-item-inner .icon-cancel, .records .cities-item .records-item-inner .icon-delete, .records .cities-item .records-item-inner .icon-cancel, .records .cities-item .cities-item-inner .icon-delete, .records .cities-item .cities-item-inner .icon-cancel, .cities .records-item .records-item-inner .icon-delete, .cities .records-item .records-item-inner .icon-cancel, .cities .records-item .cities-item-inner .icon-delete, .cities .records-item .cities-item-inner .icon-cancel, .cities .cities-item .records-item-inner .icon-delete, .cities .cities-item .records-item-inner .icon-cancel, .cities .cities-item .cities-item-inner .icon-delete, .cities .cities-item .cities-item-inner .icon-cancel {
+        position: absolute;
+        top: 0.3rem;
+        right: 0.3rem; }
+      .records .records-item .records-item-inner .olxId-input, .records .records-item .cities-item-inner .olxId-input, .records .cities-item .records-item-inner .olxId-input, .records .cities-item .cities-item-inner .olxId-input, .cities .records-item .records-item-inner .olxId-input, .cities .records-item .cities-item-inner .olxId-input, .cities .cities-item .records-item-inner .olxId-input, .cities .cities-item .cities-item-inner .olxId-input {
+        font-size: 10pt;
+        font-weight: bold;
+        width: 4.25rem;
+        text-align: left;
+        display: inline; }
+      .records .records-item .records-item-inner .name-input, .records .records-item .cities-item-inner .name-input, .records .cities-item .records-item-inner .name-input, .records .cities-item .cities-item-inner .name-input, .cities .records-item .records-item-inner .name-input, .cities .records-item .cities-item-inner .name-input, .cities .cities-item .records-item-inner .name-input, .cities .cities-item .cities-item-inner .name-input {
+        font-size: 10pt;
+        font-weight: bold;
+        width: 5rem;
+        text-align: left;
+        display: inline; }
+      .records .records-item .records-item-inner .record-info, .records .records-item .records-item-inner .city-info, .records .records-item .records-item-inner .city-date, .records .records-item .records-item-inner .city-stat, .records .records-item .cities-item-inner .record-info, .records .records-item .cities-item-inner .city-info, .records .records-item .cities-item-inner .city-date, .records .records-item .cities-item-inner .city-stat, .records .cities-item .records-item-inner .record-info, .records .cities-item .records-item-inner .city-info, .records .cities-item .records-item-inner .city-date, .records .cities-item .records-item-inner .city-stat, .records .cities-item .cities-item-inner .record-info, .records .cities-item .cities-item-inner .city-info, .records .cities-item .cities-item-inner .city-date, .records .cities-item .cities-item-inner .city-stat, .cities .records-item .records-item-inner .record-info, .cities .records-item .records-item-inner .city-info, .cities .records-item .records-item-inner .city-date, .cities .records-item .records-item-inner .city-stat, .cities .records-item .cities-item-inner .record-info, .cities .records-item .cities-item-inner .city-info, .cities .records-item .cities-item-inner .city-date, .cities .records-item .cities-item-inner .city-stat, .cities .cities-item .records-item-inner .record-info, .cities .cities-item .records-item-inner .city-info, .cities .cities-item .records-item-inner .city-date, .cities .cities-item .records-item-inner .city-stat, .cities .cities-item .cities-item-inner .record-info, .cities .cities-item .cities-item-inner .city-info, .cities .cities-item .cities-item-inner .city-date, .cities .cities-item .cities-item-inner .city-stat {
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
+      .records .records-item .records-item-inner .record-info, .records .records-item .cities-item-inner .record-info, .records .cities-item .records-item-inner .record-info, .records .cities-item .cities-item-inner .record-info, .cities .records-item .records-item-inner .record-info, .cities .records-item .cities-item-inner .record-info, .cities .cities-item .records-item-inner .record-info, .cities .cities-item .cities-item-inner .record-info {
+        width: 10rem; }
+      .records .records-item .records-item-inner .city-info, .records .records-item .cities-item-inner .city-info, .records .cities-item .records-item-inner .city-info, .records .cities-item .cities-item-inner .city-info, .cities .records-item .records-item-inner .city-info, .cities .records-item .cities-item-inner .city-info, .cities .cities-item .records-item-inner .city-info, .cities .cities-item .cities-item-inner .city-info {
+        width: 14rem; }
+      .records .records-item .records-item-inner .city-date, .records .records-item .records-item-inner .record-date, .records .records-item .cities-item-inner .city-date, .records .records-item .cities-item-inner .record-date, .records .cities-item .records-item-inner .city-date, .records .cities-item .records-item-inner .record-date, .records .cities-item .cities-item-inner .city-date, .records .cities-item .cities-item-inner .record-date, .cities .records-item .records-item-inner .city-date, .cities .records-item .records-item-inner .record-date, .cities .records-item .cities-item-inner .city-date, .cities .records-item .cities-item-inner .record-date, .cities .cities-item .records-item-inner .city-date, .cities .cities-item .records-item-inner .record-date, .cities .cities-item .cities-item-inner .city-date, .cities .cities-item .cities-item-inner .record-date {
+        width: 9rem; }
+      .records .records-item .records-item-inner .city-stat, .records .records-item .cities-item-inner .city-stat, .records .cities-item .records-item-inner .city-stat, .records .cities-item .cities-item-inner .city-stat, .cities .records-item .records-item-inner .city-stat, .cities .records-item .cities-item-inner .city-stat, .cities .cities-item .records-item-inner .city-stat, .cities .cities-item .cities-item-inner .city-stat {
+        text-align: center;
+        width: 8rem; }
 
 .statistics {
-    text-align: center;
-    margin: 10px 0px;
-}
+  margin-top: 1rem; }
+  .statistics table {
+    border-collapse: collapse;
+    font-size: 10pt;
+    font-weight: bold; }
+    .statistics table tr.header {
+      border-bottom: 3px solid black; }
+    .statistics table tr.tr-border-bottom {
+      border-bottom: 1px solid black; }
+    .statistics table td {
+      padding: 0.5rem;
+      text-align: center;
+      border-right: 2px solid black; }
+    .statistics table .sort {
+      font-size: 12pt;
+      cursor: pointer; }
+
+.configuration {
+  margin-top: 1rem;
+  font-weight: bold; }
+  .configuration .section {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; }
+    .configuration .section .row {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0.5rem 0; }
+      .configuration .section .row .title {
+        width: 25rem; }
+      .configuration .section .row input[type="text"], .configuration .section .row input[type="number"], .configuration .section .row input[type="password"] {
+        font-weight: bold;
+        width: 15rem; }
+
+/*# sourceMappingURL=style.css.map */

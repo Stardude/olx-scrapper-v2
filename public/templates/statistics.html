@@ -1,0 +1,37 @@
+<div class="outer">
+    <div class="title-outer">
+        <div class="title">СТАТИСТИКА</div>
+        <div class="button-section">
+            <input type="button" value="Зібрати" ng-click="collectStatistics()" style="margin-bottom: 0.2rem"/>
+            <input type="button" value="Зберегти в Excel" ng-click="storeToExcel()" style="margin-bottom: 0.2rem" />
+            <input type="button" value="Зібрати + Зберегти в Excel" ng-click="collectAndStore()" />
+        </div>
+    </div>
+    <div class="statistics">
+        <table>
+            <tr class="header">
+                <td>Дата перевірки <span class="sort" ng-click="sortBy('dateOfChecking')">{{getSortIcon('dateOfChecking')}}</span></td>
+                <td>Код товару <span class="sort" ng-click="sortBy('olxId')">{{getSortIcon('olxId')}}</span></td>
+                <td>Активний <span class="sort" ng-click="sortBy('isActive')">{{getSortIcon('isActive')}}</span></td>
+                <td>Місто <span class="sort" ng-click="sortBy('cityId')">{{getSortIcon('cityId')}}</span></td>
+                <td>Перегляди <span class="sort" ng-click="sortBy('views')">{{getSortIcon('views')}}</span></td>
+                <td>Телефони <span class="sort" ng-click="sortBy('phones')">{{getSortIcon('phones')}}</span></td>
+                <td>Повідомлення <span class="sort" ng-click="sortBy('messages')">{{getSortIcon('messages')}}</span></td>
+                <td>Обрані <span class="sort" ng-click="sortBy('chosens')">{{getSortIcon('chosens')}}</span></td>
+            </tr>
+            <tr ng-repeat="stat in data.statistics" ng-class="{'tr-border-bottom': ($index+1)%10===0}">
+                <td>{{formatDate(stat.dateOfChecking)}}</td>
+                <td>{{stat.olxId}}</td>
+                <td>{{stat.isActive ? "Так" : "Ні"}}</td>
+                <td>{{stat.cityId || "-----"}}</td>
+                <td>{{stat.views}}</td>
+                <td>{{stat.phones}}</td>
+                <td>{{stat.messages}}</td>
+                <td>{{stat.chosens}}</td>
+            </tr>
+        </table>
+        <div class="header">
+
+        </div>
+    </div>
+</div>

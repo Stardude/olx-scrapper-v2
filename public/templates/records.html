@@ -1,0 +1,43 @@
+<div class="outer">
+    <div class="title-outer">
+        <div class="title">ТОВАРИ</div>
+        <div class="button-section">
+            <input type="button" value="Відмітити всі" ng-click="toggleCheckboxes(true)" style="margin-bottom: 0.2rem"/>
+            <input type="button" value="Зняти всі" ng-click="toggleCheckboxes(false)" />
+        </div>
+        <div class="button-section">
+            <input type="text" class="title-input" id="price-fixed" value="0" />
+            <input type="button" value="Змінити (фіксовано)" ng-click="changePrice('fixed')" />
+        </div>
+        <div class="button-section">
+            <input type="text" class="title-input" id="price-percentage" value="0" />
+            <input type="button" value="Змінити (%)" ng-click="changePrice('percentage')" />
+        </div>
+    </div>
+    <div class="records">
+        <div class="records-item" ng-repeat="record in data.records">
+            <input class="record-checkbox" type="checkbox" ng-model="record.checked" />
+            <div ng-if="!record.isEdit && !record.isNew" class="records-item-inner">
+                <span class="record-info">{{record.olxId}} - {{record.name}}</span>
+                <span class="record-date" ng-class="{'green': !!record.lastPriceStatus, 'red': !!!record.lastPriceStatus}">{{record.lastPriceChange ? formatDate(record.lastPriceChange) : ""}}</span>
+                <div style="display: inline-block; width: 2rem"> </div>
+                <div class="icon-edit" ng-click="editRecord(record); $event.stopPropagation();"></div>
+                <div class="icon-delete" ng-click="deleteRecord(record); $event.stopPropagation();"></div>
+            </div>
+            <div ng-if="record.isEdit || record.isNew" class="records-item-inner">
+                <input type="text" class="olxId-input" maxlength="9" value="{{record.olxId}}" ng-model="record.olxId" ng-click="$event.stopPropagation();"/>
+                <span> - </span>
+                <input type="text" class="name-input" value="{{record.name}}" ng-model="record.name" ng-click="$event.stopPropagation();"/>
+                <div style="display: inline-block; width: 3rem"> </div>
+                <div class="icon-save" ng-click="saveRecord(record); $event.stopPropagation();"></div>
+                <div class="icon-cancel" ng-click="cancelRecord(record); $event.stopPropagation();"></div>
+            </div>
+        </div>
+        <div class="records-item" ng-click="addRecord()">
+            <div style="display: inline-block; width: 1.5rem"> </div>
+            <div class="records-item-inner">
+                + Новий товар
+            </div>
+        </div>
+    </div>
+</div>

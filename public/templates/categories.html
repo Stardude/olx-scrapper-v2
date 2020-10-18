@@ -1,0 +1,22 @@
+<div class="outer">
+    <div class="title-outer">
+        <div class="title">КАТЕГОРІЇ</div>
+    </div>
+    <div class="categories">
+        <div class="categories-item" ng-repeat="category in data.categories" ng-click="openCategory(category)">
+            <div ng-if="!category.isEdit && !category.isNew" class="categories-item-inner">
+                {{category.name}}
+                <div class="icon-edit" ng-click="editCategory(category); $event.stopPropagation();"></div>
+                <div class="icon-delete" ng-click="deleteCategory(category); $event.stopPropagation();"></div>
+            </div>
+            <div ng-if="category.isEdit || category.isNew" class="categories-item-inner">
+                <input type="text" value="{{category.name}}" ng-model="category.name" ng-click="$event.stopPropagation();"/>
+                <div class="icon-save" ng-click="saveCategory(category); $event.stopPropagation();"></div>
+                <div class="icon-cancel" ng-click="cancelCategory(category); $event.stopPropagation();"></div>
+            </div>
+        </div>
+        <div class="categories-item" ng-click="addCategory()">
+            <span class="symbol-cross">+</span>
+        </div>
+    </div>
+</div>

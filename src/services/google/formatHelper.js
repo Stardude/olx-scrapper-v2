@@ -12,11 +12,11 @@ module.exports = {
                     endColumnIndex: lastColumnId
                 },
                 top: {
-                    style: 'SOLID',
+                    style: "SOLID",
                     width: 2
                 },
                 bottom: {
-                    style: 'SOLID',
+                    style: "SOLID",
                     width: 2
                 }
             }
@@ -31,7 +31,7 @@ module.exports = {
                     endColumnIndex: lastColumnId
                 },
                 bottom: {
-                    style: 'SOLID',
+                    style: "SOLID",
                     width: 2
                 }
             }
@@ -46,11 +46,11 @@ module.exports = {
                     endColumnIndex: 2
                 },
                 left: {
-                    style: 'SOLID',
+                    style: "SOLID",
                     width: 2
                 },
                 right: {
-                    style: 'SOLID',
+                    style: "SOLID",
                     width: 2
                 }
             }
@@ -65,7 +65,7 @@ module.exports = {
                     endColumnIndex: 1
                 },
                 bottom: {
-                    style: 'SOLID',
+                    style: "SOLID",
                     width: 2
                 }
             }
@@ -84,11 +84,11 @@ module.exports = {
                 },
                 cell: {
                     userEnteredFormat: {
-                        horizontalAlignment: 'CENTER',
-                        textFormat: { bold: true, fontFamily: 'Roboto' }
+                        horizontalAlignment: "CENTER",
+                        textFormat: { bold: true, fontFamily: "Roboto" }
                     }
                 },
-                fields: 'userEnteredFormat(textFormat,horizontalAlignment)'
+                fields: "userEnteredFormat(textFormat,horizontalAlignment)"
             }
         },
         {
@@ -105,7 +105,7 @@ module.exports = {
                         backgroundColor: { red: 1 }
                     }
                 },
-                fields: 'userEnteredFormat(backgroundColor)'
+                fields: "userEnteredFormat(backgroundColor)"
             }
         },
         {
@@ -122,7 +122,7 @@ module.exports = {
                         backgroundColor: { red: 0.24, green: 0.52, blue: 0.78 }
                     }
                 },
-                fields: 'userEnteredFormat(backgroundColor)'
+                fields: "userEnteredFormat(backgroundColor)"
             }
         },
         {
@@ -136,10 +136,10 @@ module.exports = {
                 },
                 cell: {
                     userEnteredFormat: {
-                        horizontalAlignment: 'LEFT'
+                        horizontalAlignment: "LEFT"
                     }
                 },
-                fields: 'userEnteredFormat(horizontalAlignment)'
+                fields: "userEnteredFormat(horizontalAlignment)"
             }
         },
         {
