@@ -7,7 +7,9 @@
 
         await git.init();
 
-        await git.removeRemote('origin');
+        try {
+            await git.removeRemote('origin');
+        } catch (e) {}
         await git.addRemote('origin', remote);
 
         await git.addConfig('user.email', gitConfig.email);
