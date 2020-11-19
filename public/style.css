@@ -85,6 +85,31 @@ html, body {
   .icon-cancel:hover {
     background-color: #adadad; }
 
+.icon-phone {
+  background-image: url("https://icons-for-free.com/iconfiles/png/512/phone+24px-131985190667730229.png"); }
+
+.icon-active {
+  background-image: url("https://icons-for-free.com/iconfiles/png/512/check+circle+24px-131985190191174766.png"); }
+
+.icon-eye {
+  background-image: url("https://icons-for-free.com/iconfiles/png/512/eye-131979012921334066.png"); }
+
+.icon-message {
+  background-image: url("https://icons-for-free.com/iconfiles/png/512/message+24px-131985190563271069.png"); }
+
+.icon-love {
+  background-image: url("https://icons-for-free.com/iconfiles/png/512/love+minimal+spiritual+icon-1320085758646354702.png"); }
+
+.icon-phone,
+.icon-active,
+.icon-eye,
+.icon-message,
+.icon-love {
+  display: inline-block;
+  width: 0.8rem;
+  height: 0.8rem;
+  background-size: cover; }
+
 input[type="text"], input[type="number"], input[type="password"] {
   outline: none;
   background-color: transparent;
@@ -254,6 +279,8 @@ input[type="text"], input[type="number"], input[type="password"] {
       padding: 0.5rem;
       text-align: center;
       border-right: 2px solid black; }
+      .statistics table td:nth-child(even) {
+        background-color: #bfbfbf; }
     .statistics table .sort {
       font-size: 12pt;
       cursor: pointer; }

@@ -4,7 +4,8 @@
     app.controller("ConfigurationController", function ($scope, $http) {
         $scope.data = {
             configuration: null,
-            original: null
+            original: null,
+            deleteCookiesDisabled: false
         };
 
         $http.get(`/api/configuration`)
@@ -24,6 +25,13 @@
                 .then(response => {
                     $scope.data.configuration = response.data || null;
                     $scope.data.original = { ...$scope.data.configuration };
+                });
+        };
+
+        $scope.deleteCookies = function () {
+            $http.delete(`/api/configuration/cookies`)
+                .then(() => {
+                    $scope.data.deleteCookiesDisabled = true;
                 });
         };
     });

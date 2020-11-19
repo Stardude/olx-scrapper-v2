@@ -8,8 +8,19 @@
             sortDirections: []
         };
 
+        function calculateStatisticsDifference (statistics) {
+            statistics.forEach(stat => {
+                stat.viewsDifference = +stat.views - +stat.lastViews;
+                stat.phonesDifference = +stat.phones - +stat.lastPhones;
+                stat.messagesDifference = +stat.messages - +stat.lastMessages;
+                stat.chosensDifference = +stat.chosens - +stat.lastChosens;
+            });
+
+            return statistics;
+        }
+
         $http.get("/api/statistics").then(response => {
-            $scope.data.statistics = response.data.statistics || [];
+            $scope.data.statistics = calculateStatisticsDifference(response.data.statistics || []);
             $scope.data.sortColumns.push("dateOfChecking");
             $scope.data.sortDirections.push("desc");
             $scope.data.statistics = _.orderBy($scope.data.statistics, $scope.data.sortColumns, $scope.data.sortDirections);
@@ -60,6 +71,7 @@
         $scope.storeToExcel = function () {
             $http.post("/api/statistics", { writeToExcel: true, getFromDb: true });
         };
+
         $scope.collectAndStore = function () {
             $http.post("/api/statistics", { writeToExcel: true });
         };

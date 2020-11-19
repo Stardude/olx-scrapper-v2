@@ -9,16 +9,21 @@
             sortDirections: []
         };
 
+        function sortCities(cities) {
+            return _.orderBy(cities, $scope.data.sortColumns, $scope.data.sortDirections);
+        }
+
         $http.get(`/api/cities`)
             .then(response => {
                 $scope.data.cities = response.data.cities || [];
                 $scope.data.cities.forEach(city => {
                     city.original = { ...city };
                     city.checked = false;
+                    city.dateOfChecking = city.dateOfChecking || "";
                 });
                 $scope.data.sortColumns.push("dateOfChecking");
                 $scope.data.sortDirections.push("desc");
-                $scope.data.cities = _.orderBy($scope.data.cities, $scope.data.sortColumns, $scope.data.sortDirections);
+                $scope.data.cities = sortCities($scope.data.cities);
             });
 
         $scope.getSortIcon = function (column) {
@@ -45,7 +50,7 @@
                 $scope.data.sortDirections.push("desc");
             }
 
-            $scope.data.cities = _.orderBy($scope.data.cities, $scope.data.sortColumns, $scope.data.sortDirections);
+            $scope.data.cities = sortCities($scope.data.cities);
         };
 
         function prepareForRequest(cities) {

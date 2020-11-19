@@ -20,17 +20,37 @@ module.exports = {
             type: DataTypes.INTEGER,
             allowNull: true
         },
+        lastViews: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: 0
+        },
         phones: {
             type: DataTypes.INTEGER,
             allowNull: true
+        },
+        lastPhones: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: 0
         },
         chosens: {
             type: DataTypes.INTEGER,
             allowNull: true
         },
+        lastChosens: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: 0
+        },
         messages: {
             type: DataTypes.INTEGER,
             allowNull: true
+        },
+        lastMessages: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: 0
         },
         cityId: {
             type: DataTypes.STRING(50),

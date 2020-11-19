@@ -33,7 +33,7 @@ const useCredentials = async (page, email, password) => {
     logger.info('User has successfully log in!');
     logger.info('Saving cookies...');
     const cookies = await page.cookies();
-    fs.writeFileSync(COOKIES_PATH, JSON.stringify(cookies, null, 2));
+    fs.writeFileSync(path.join(__dirname, ROOT_DIR, COOKIES_PATH), JSON.stringify(cookies, null, 2));
     logger.info(`Cookies stored in ${COOKIES_PATH}`);
 };
 

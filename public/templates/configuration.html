@@ -41,6 +41,9 @@
                 <div class="title">Пароль</div>
                 <input class="value" type="password" value="{{data.configuration.olxPassword}}" ng-model="data.configuration.olxPassword" />
             </div>
+            <div class="row">
+                <button ng-click="deleteCookies()" ng-disabled="data.deleteCookiesDisabled">Видалити файл автоматичної авторизації</button>
+            </div>
         </div>
         <div class="section">
             <div class="header">GOOGLE</div>

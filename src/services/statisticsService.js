@@ -115,18 +115,40 @@ const storeInDatabase = async data => {
         logger.error(`An error occurred while saving cities to DB: ${err}`);
     }
 
+    const { rows: oldStatistics } = await recordStatisticsDao.getAll();
     try {
-        const statistics = olxIds.map(olxId => ({
-            olxId,
-            views: data[olxId].views,
-            phones: data[olxId].phones,
-            chosens: data[olxId].chosens,
-            messages: data[olxId].messages,
-            cityId: data[olxId].cityId,
-            isActive: data[olxId].isActive,
-            dateOfChecking: NOW,
-        }));
-        await recordStatisticsDao.createMany(statistics, { updateOnDuplicate: ['views', 'phones', 'chosens', 'messages', 'cityId', 'isActive', 'dateOfChecking'] });
+        const statistics = olxIds.map(olxId => {
+            const oldStatistic = oldStatistics.find(old => `${old.olxId}` === `${olxId}`) || {};
+            return {
+                olxId,
+                views: data[olxId].views,
+                lastViews: oldStatistic.views || 0,
+                phones: data[olxId].phones,
+                lastPhones: oldStatistic.phones || 0,
+                chosens: data[olxId].chosens,
+                lastChosens: oldStatistic.chosens || 0,
+                messages: data[olxId].messages,
+                lastMessages: oldStatistic.messages || 0,
+                cityId: data[olxId].cityId,
+                isActive: data[olxId].isActive,
+                dateOfChecking: NOW,
+            };
+        });
+        await recordStatisticsDao.createMany(statistics, {
+            updateOnDuplicate: [
+                'views',
+                'lastViews',
+                'phones',
+                'lastPhones',
+                'chosens',
+                'lastChosens',
+                'messages',
+                'lastMessages',
+                'cityId',
+                'isActive',
+                'dateOfChecking'
+            ]
+        });
     } catch (err) {
         logger.error(`An error occurred while saving statistics to DB: ${err}`);
     }

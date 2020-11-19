@@ -32,4 +32,17 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.delete('/cookies', async (req, res) => {
+    try {
+        logger.info('Removing cookies...');
+        await configurationService.removeCookies();
+
+        logger.info('Cookies removed successfully!');
+        res.sendStatus(200);
+    } catch (err) {
+        logger.error(`An error occurred during removing cookies: ${err}`);
+        res.sendStatus(500);
+    }
+});
+
 module.exports = router;

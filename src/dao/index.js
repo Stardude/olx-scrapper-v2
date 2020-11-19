@@ -46,7 +46,7 @@ module.exports = {
 
             buildAssociations();
 
-            await instance.sync();
+            await instance.sync({ alter: true });
         } catch (err) {
             console.error(`An error occurred during defining models: ${err}`);
             throw err;

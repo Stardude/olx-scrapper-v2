@@ -105,7 +105,7 @@ const storeInDatabase = async (list) => {
     }
 };
 
-module.exports.getStatistics = async ({ cities, writeToExcel, getFromDb }) => {
+module.exports.collectStatistics = async ({ cities, writeToExcel, getFromDb }) => {
     let result = [];
 
     if (!getFromDb) {
@@ -172,6 +172,4 @@ module.exports.getStatistics = async ({ cities, writeToExcel, getFromDb }) => {
     if (writeToExcel) {
         await googleService.writeCitiesToSpreadsheet(result);
     }
-
-    return module.exports.getAll();
 };

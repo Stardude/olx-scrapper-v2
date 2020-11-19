@@ -109,7 +109,7 @@ router.post('/statistics', async (req, res) => {
         const filtered = cities.filter(city => cityIds.find(id => id === city.id));
 
         logger.info('Collecting statistics for chosen cities...');
-        citiesService.getStatistics({ cities: filtered, writeToExcel, getFromDb });
+        citiesService.collectStatistics({ cities: filtered, writeToExcel, getFromDb });
         res.sendStatus(200);
     } catch (err) {
         logger.error(`An error occurred during collecting cities statistics: ${err}`);
