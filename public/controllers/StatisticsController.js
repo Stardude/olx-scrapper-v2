@@ -10,10 +10,10 @@
 
         function calculateStatisticsDifference (statistics) {
             statistics.forEach(stat => {
-                stat.viewsDifference = +stat.views - +stat.lastViews;
-                stat.phonesDifference = +stat.phones - +stat.lastPhones;
-                stat.messagesDifference = +stat.messages - +stat.lastMessages;
-                stat.chosensDifference = +stat.chosens - +stat.lastChosens;
+                stat.viewsDifference = parseInt(stat.views || 0) - parseInt(stat.lastViews || 0);
+                stat.phonesDifference = parseInt(stat.phones || 0) - parseInt(stat.lastPhones || 0);
+                stat.messagesDifference = parseInt(stat.messages || 0) - parseInt(stat.lastMessages || 0);
+                stat.chosensDifference = parseInt(stat.chosens || 0) - parseInt(stat.lastChosens || 0);
             });
 
             return statistics;
