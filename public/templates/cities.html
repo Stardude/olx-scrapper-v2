@@ -16,12 +16,12 @@
             <div style="display: inline-block; width: 1.5rem"> </div>
             <div class="cities-item-inner">
                 <span class="city-info" ng-click="sortBy('olxId')">Код міста - Назва міста{{getSortIcon('olxId')}}</span>
-                <span class="city-date" ng-click="sortBy('dateOfChecking')">Дата {{getSortIcon('dateOfChecking')}}</span>
-                <span class="city-stat" ng-click="sortBy('generalAmount')">ЗАГ{{getSortIcon('generalAmount')}}</span>
-                <span class="city-stat" ng-click="sortBy('topAmount')">ТОП{{getSortIcon('topAmount')}}</span>
-                <span class="city-stat" ng-click="sortBy('topGeneralPercentage')">%{{getSortIcon('topGeneralPercentage')}}</span>
-                <span class="city-stat" ng-click="sortBy('myGeneralAmount')">МЗАГ{{getSortIcon('myGeneralAmount')}}</span>
-                <span class="city-stat" ng-click="sortBy('myTopAmount')">МТОП{{getSortIcon('myTopAmount')}}</span>
+                <span class="city-date" ng-click="sortBy('dateOfChecking')" title="Дата перевірки">Дата {{getSortIcon('dateOfChecking')}}</span>
+                <span class="city-stat" ng-click="sortBy('generalAmount')" title="Загальна кількість">ЗАГ{{getSortIcon('generalAmount')}}</span>
+                <span class="city-stat" ng-click="sortBy('topAmount')" title="ТОП кількість">ТОП{{getSortIcon('topAmount')}}</span>
+                <span class="city-stat" ng-click="sortBy('topGeneralPercentage')" title="Відношення загальних до ТОП">%{{getSortIcon('topGeneralPercentage')}}</span>
+                <span class="city-stat" ng-click="sortBy('myGeneralAmount')" title="Моїх Загальна кількість">МЗАГ{{getSortIcon('myGeneralAmount')}}</span>
+                <span class="city-stat" ng-click="sortBy('myTopAmount')" title="Моїх ТОП кількість">МТОП{{getSortIcon('myTopAmount')}}</span>
                 <div style="display: inline-block; width: 2rem"> </div>
             </div>
         </div>
