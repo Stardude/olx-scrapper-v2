@@ -16,6 +16,10 @@ module.exports = {
             type: DataTypes.BOOLEAN,
             allowNull: false
         },
+        isTop: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true
+        },
         views: {
             type: DataTypes.INTEGER,
             allowNull: true

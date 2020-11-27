@@ -16,8 +16,8 @@ module.exports.getAll = prepareModel(async () => {
 
 module.exports.countByCityId = prepareModel(async () => {
     return RecordStatistics.findAll({
-        group: ["cityId"],
-        attributes: ["cityId", [sequelize.fn("COUNT", "cityId"), "count"]],
+        group: ["cityId", "isTop"],
+        attributes: ["cityId", "isTop", [sequelize.fn("COUNT", "cityId"), "count"]],
         raw: true
     });
 });

@@ -1,9 +1,9 @@
-const config = require('../configStorage');
 const cityDao = require('../dao').getDao('cityDao');
 const puppeterService = require('./puppeter');
 const googleService = require('./google');
 const pageService = require('./pageService');
 const statisticsService = require('./statisticsService');
+const configurationService = require('./configurationService');
 const updateUtil = require('../utils/updateUtil');
 const logger = require('../utils/logger')('CITIES_SERVICE');
 const { getDataFacetsAttribute } = require('../utils/puppeterUtils');
@@ -21,20 +21,18 @@ module.exports.create = async newCity => {
 };
 
 module.exports.updateAmountMany = async (cities) => {
-    return cityDao.createMany(cities, { updateOnDuplicate: ['generalAmount', 'topAmount', 'dateOfChecking'] });
+    return cityDao.createMany(cities, {
+        updateOnDuplicate: [
+            'generalAmount',
+            'topAmount',
+            'myGeneralAmount',
+            'myTopAmount',
+            'dateOfChecking'
+        ] });
 };
 
 module.exports.getAll = async () => {
-    const { count, rows } = await cityDao.getAll();
-    const stats = await statisticsService.countByCityId();
-    const cities = rows.map(row => {
-        const stat = stats.find(stat => stat.cityId === row.olxId);
-        return {
-            ...row,
-            myGeneralAmount: stat ? stat.count : null,
-            myTopAmount: stat ? stat.count : null
-        };
-    });
+    const { count, rows: cities } = await cityDao.getAll();
     return { count, cities };
 };
 
@@ -109,64 +107,55 @@ module.exports.collectStatistics = async ({ cities, writeToExcel, getFromDb }) =
     let result = [];
 
     if (!getFromDb) {
+        const { citiesAmount } = await configurationService.get();
         const { generalUrls, topUrls } = prepareUrls(cities);
         const browser = await puppeterService.launchAndLogin();
 
         const { successes: generalData, errors: generalErrors } = await pageService.loopThroughPages(browser, generalUrls, handleCityPage, {
-            pagesPerIteration: config.CITIES_PER_ITERATION
+            pagesPerIteration: citiesAmount
         });
 
         const { successes: topData, errors: topErrors } = await pageService.loopThroughPages(browser, topUrls, handleCityPage, {
-            pagesPerIteration: config.CITIES_PER_ITERATION
+            pagesPerIteration: citiesAmount
         });
 
         if (generalErrors.length) {
             for (let i = 0; i < generalErrors.length; i++) {
-                const { data: city, reason: err } = errors[i];
+                const { data: city, reason: err } = generalErrors[i];
                 logger.error(`An error occurred during fetching general statistics from city '${city.olxId}': ${err}`);
             }
         }
 
         if (topErrors.length) {
             for (let i = 0; i < topErrors.length; i++) {
-                const { data: city, reason: err } = errors[i];
+                const { data: city, reason: err } = topErrors[i];
                 logger.error(`An error occurred during fetching top statistics from city '${city.olxId}': ${err}`);
             }
         }
 
         logger.info(`Statistics for all cities fetched! Total amount: ${Object.keys(generalData).length}`);
+
         await puppeterService.close();
 
         const stats = await statisticsService.countByCityId();
         const NOW = new Date().toISOString();
         result = generalData.map(g => {
             const t = topData.find(t => t.city.olxId === g.city.olxId);
-            const stat = stats.find(stat => stat.cityId === g.city.olxId);
+            const stat = stats.find(stat => (!stat.isTop && stat.cityId === g.city.olxId));
+            const topStat = stats.find(stat => (stat.isTop && stat.cityId === g.city.olxId));
             return {
                 olxId: g.city.olxId,
                 name: g.city.name,
                 generalAmount: g.amount,
                 topAmount: t.amount,
                 myGeneralAmount: stat ? stat.count : null,
-                myTopAmount: stat ? stat.count : null,
+                myTopAmount: topStat ? topStat.count : null,
                 dateOfChecking: NOW
             };
         });
         await storeInDatabase(result);
     } else {
-        const stats = await statisticsService.countByCityId();
-        result = cities.map(city => {
-            const stat = stats.find(stat => stat.cityId === city.olxId);
-            return {
-                olxId: city.olxId,
-                name: city.name,
-                generalAmount: city.generalAmount,
-                topAmount: city.topAmount,
-                myGeneralAmount: stat ? stat.count : null,
-                myTopAmount: stat ? stat.count : null,
-                dateOfChecking: city.dateOfChecking
-            };
-        });
+        result = cities;
     }
 
     if (writeToExcel) {

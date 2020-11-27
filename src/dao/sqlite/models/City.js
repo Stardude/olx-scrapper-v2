@@ -24,6 +24,14 @@ module.exports = {
             type: DataTypes.INTEGER,
             allowNull: true
         },
+        myGeneralAmount: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
+        myTopAmount: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
         dateOfChecking: {
             type: DataTypes.STRING(24),
             allowNull: true

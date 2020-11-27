@@ -20,6 +20,9 @@
                     city.original = { ...city };
                     city.checked = false;
                     city.dateOfChecking = city.dateOfChecking || "";
+                    city.topGeneralPercentage = (city.generalAmount && city.topAmount) ?
+                        (parseInt(city.topAmount || 0) / parseInt(city.generalAmount || 0) * 100).toFixed(2)
+                        : "";
                 });
                 $scope.data.sortColumns.push("dateOfChecking");
                 $scope.data.sortDirections.push("desc");

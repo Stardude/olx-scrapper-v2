@@ -13,6 +13,7 @@
                 <td><span title="Дата перевірки">Дата</span> <span class="sort" ng-click="sortBy('dateOfChecking')">{{getSortIcon('dateOfChecking')}}</span></td>
                 <td><span title="Код товару">ID</span> <span class="sort" ng-click="sortBy('olxId')">{{getSortIcon('olxId')}}</span></td>
                 <td><span class="icon-active" title="Чи активний"></span> <span class="sort" ng-click="sortBy('isActive')">{{getSortIcon('isActive')}}</span></td>
+                <td>ТОП <span class="sort" ng-click="sortBy('isTop')">{{getSortIcon('isTop')}}</span></td>
                 <td>Місто <span class="sort" ng-click="sortBy('cityId')">{{getSortIcon('cityId')}}</span></td>
                 <td><span class="icon-eye" title="Перегляди"></span> <span class="sort" ng-click="sortBy('views')">{{getSortIcon('views')}}</span></td>
                 <td>– <span class="icon-eye" title="Перегляди (різниця)"></span> <span class="sort" ng-click="sortBy('viewsDifference')">{{getSortIcon('viewsDifference')}}</span></td>
@@ -26,7 +27,8 @@
             <tr ng-repeat="stat in data.statistics" ng-class="{'tr-border-bottom': ($index+1)%10===0}">
                 <td>{{formatDate(stat.dateOfChecking)}}</td>
                 <td>{{stat.olxId}}</td>
-                <td>{{stat.isActive ? "Так" : "Ні"}}</td>
+                <td>{{stat.isActive ? "Так" : "-"}}</td>
+                <td>{{stat.isTop ? "Так" : "-"}}</td>
                 <td>{{stat.cityId || "-----"}}</td>
                 <td>{{stat.views}}</td>
                 <td>{{stat.viewsDifference}}</td>

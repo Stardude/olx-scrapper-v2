@@ -16,11 +16,12 @@
             <div style="display: inline-block; width: 1.5rem"> </div>
             <div class="cities-item-inner">
                 <span class="city-info" ng-click="sortBy('olxId')">Код міста - Назва міста{{getSortIcon('olxId')}}</span>
-                <span class="city-date" ng-click="sortBy('dateOfChecking')">Дата перевірки{{getSortIcon('dateOfChecking')}}</span>
-                <span class="city-stat" ng-click="sortBy('generalAmount')">Загальна{{getSortIcon('generalAmount')}}</span>
-                <span class="city-stat" ng-click="sortBy('topAmount')">Топ{{getSortIcon('topAmount')}}</span>
-                <span class="city-stat" ng-click="sortBy('myGeneralAmount')">Моїх загальна{{getSortIcon('myGeneralAmount')}}</span>
-                <span class="city-stat" ng-click="sortBy('myTopAmount')">Моїх топ{{getSortIcon('myTopAmount')}}</span>
+                <span class="city-date" ng-click="sortBy('dateOfChecking')">Дата {{getSortIcon('dateOfChecking')}}</span>
+                <span class="city-stat" ng-click="sortBy('generalAmount')">ЗАГ{{getSortIcon('generalAmount')}}</span>
+                <span class="city-stat" ng-click="sortBy('topAmount')">ТОП{{getSortIcon('topAmount')}}</span>
+                <span class="city-stat" ng-click="sortBy('topGeneralPercentage')">%{{getSortIcon('topGeneralPercentage')}}</span>
+                <span class="city-stat" ng-click="sortBy('myGeneralAmount')">МЗАГ{{getSortIcon('myGeneralAmount')}}</span>
+                <span class="city-stat" ng-click="sortBy('myTopAmount')">МТОП{{getSortIcon('myTopAmount')}}</span>
                 <div style="display: inline-block; width: 2rem"> </div>
             </div>
         </div>
@@ -31,6 +32,7 @@
                 <span class="city-date">{{city.dateOfChecking ? formatDate(city.dateOfChecking) : "-----"}}</span>
                 <span class="city-stat">{{city.generalAmount || "---"}}</span>
                 <span class="city-stat">{{city.topAmount || "---"}}</span>
+                <span class="city-stat">{{city.topGeneralPercentage ? (city.topGeneralPercentage + "%") : "---"}}</span>
                 <span class="city-stat">{{city.myGeneralAmount || "---"}}</span>
                 <span class="city-stat">{{city.myTopAmount || "---"}}</span>
                 <div style="display: inline-block; width: 2rem"> </div>

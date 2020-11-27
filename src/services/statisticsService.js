@@ -9,7 +9,7 @@ const logger = require('../utils/logger')('STATISTICS_SERVICE');
 const constants = require('./puppeter/constants');
 const { getValue, getDataFeaturesAttribute } = require('../utils/puppeterUtils');
 
-const { editAdvLink, pagination, views, phones, chosen, message, city } = constants.SELECTORS;
+const { editAdvLink, pagination, views, phones, chosen, message, city, isTop, isTopInner } = constants.SELECTORS;
 const { host, mainPath } = constants.URLs;
 
 module.exports.get = async () => {
@@ -60,6 +60,18 @@ const getCity = async (page, citySelector) => {
     return citiesData;
 };
 
+const getTop = async (page, selector) => {
+    const topRows = await page.$$(selector);
+    const topData = [];
+    for (let i = 0; i < topRows.length; i++) {
+        const topRow = topRows[i];
+        const topHandle = await topRow.$(isTopInner);
+        topData.push(!!topHandle);
+    }
+
+    return topData;
+};
+
 const prepareResult = (result, advIdsOnPage, advStatistics, advType) => {
     advIdsOnPage.forEach((advId, index) => {
         if (!result[advId]) {
@@ -69,7 +81,8 @@ const prepareResult = (result, advIdsOnPage, advStatistics, advType) => {
                 chosens: advStatistics[2][index],
                 messages: advStatistics[3][index].trim(),
                 cityId: advStatistics[4][index],
-                isActive: advType === 'active'
+                isActive: advType === 'active',
+                isTop: advStatistics[5][index]
             };
         }
     });
@@ -93,7 +106,8 @@ const fetchByAdvType = async (acc, page, advType) => {
             await getAdvStatistics(page, phones),
             await getAdvStatistics(page, chosen),
             await getAdvStatistics(page, message),
-            await getCity(page, city)
+            await getCity(page, city),
+            await getTop(page, isTop)
         ];
         prepareResult(acc, advIdsOnPage, advStatistics, advType);
 
@@ -132,6 +146,7 @@ const storeInDatabase = async data => {
                 cityId: data[olxId].cityId,
                 isActive: data[olxId].isActive,
                 dateOfChecking: NOW,
+                isTop: data[olxId].isTop
             };
         });
         await recordStatisticsDao.createMany(statistics, {
@@ -146,7 +161,8 @@ const storeInDatabase = async data => {
                 'lastMessages',
                 'cityId',
                 'isActive',
-                'dateOfChecking'
+                'dateOfChecking',
+                'isTop'
             ]
         });
     } catch (err) {

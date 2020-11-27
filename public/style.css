@@ -258,12 +258,12 @@ input[type="text"], input[type="number"], input[type="password"] {
       .records .records-item .records-item-inner .record-info, .records .records-item .cities-item-inner .record-info, .records .cities-item .records-item-inner .record-info, .records .cities-item .cities-item-inner .record-info, .cities .records-item .records-item-inner .record-info, .cities .records-item .cities-item-inner .record-info, .cities .cities-item .records-item-inner .record-info, .cities .cities-item .cities-item-inner .record-info {
         width: 10rem; }
       .records .records-item .records-item-inner .city-info, .records .records-item .cities-item-inner .city-info, .records .cities-item .records-item-inner .city-info, .records .cities-item .cities-item-inner .city-info, .cities .records-item .records-item-inner .city-info, .cities .records-item .cities-item-inner .city-info, .cities .cities-item .records-item-inner .city-info, .cities .cities-item .cities-item-inner .city-info {
-        width: 14rem; }
+        width: 15rem; }
       .records .records-item .records-item-inner .city-date, .records .records-item .records-item-inner .record-date, .records .records-item .cities-item-inner .city-date, .records .records-item .cities-item-inner .record-date, .records .cities-item .records-item-inner .city-date, .records .cities-item .records-item-inner .record-date, .records .cities-item .cities-item-inner .city-date, .records .cities-item .cities-item-inner .record-date, .cities .records-item .records-item-inner .city-date, .cities .records-item .records-item-inner .record-date, .cities .records-item .cities-item-inner .city-date, .cities .records-item .cities-item-inner .record-date, .cities .cities-item .records-item-inner .city-date, .cities .cities-item .records-item-inner .record-date, .cities .cities-item .cities-item-inner .city-date, .cities .cities-item .cities-item-inner .record-date {
-        width: 9rem; }
+        width: 8rem; }
       .records .records-item .records-item-inner .city-stat, .records .records-item .cities-item-inner .city-stat, .records .cities-item .records-item-inner .city-stat, .records .cities-item .cities-item-inner .city-stat, .cities .records-item .records-item-inner .city-stat, .cities .records-item .cities-item-inner .city-stat, .cities .cities-item .records-item-inner .city-stat, .cities .cities-item .cities-item-inner .city-stat {
         text-align: center;
-        width: 8rem; }
+        width: 4.5rem; }
 
 .statistics {
   margin-top: 1rem; }

@@ -14,11 +14,14 @@ module.exports = {
         phones: "#adsTable > div.tbody > div > div.myoffersnew__item > div.myoffersnew__cell.myoffersnew__cell--content > div.myoffersnew__details > ul > li:nth-child(3) > span",
         chosen: "#adsTable > div.tbody > div > div.myoffersnew__item > div.myoffersnew__cell.myoffersnew__cell--content > div.myoffersnew__details > ul > li:nth-child(4) > span",
         message: "#adsTable > div.tbody > div > div.myoffersnew__item > div.myoffersnew__cell.myoffersnew__cell--content > div.myoffersnew__details > div.myoffersnew__messages span.inlblk",
-        city: "div.myoffersnew__row.row-elem"
+        city: "div.myoffersnew__row.row-elem",
+        isTop: "ul.myoffersnew__data",
+        isTopInner: "ul.olx-bundle-bought__items i[data-icon=circle_tick]"
     },
 
     URLs: {
-        host: "http://www.olx.ua/uk",
+        host: "https://olx.ua/uk",
+        myHost: "https://bims.olx.ua/uk",
         mainPath: "/myaccount",
         categoryPath: "/moda-i-stil/odezhda/muzhskaya-obuv",
         cityTopQuery: "?search%5Bpaidads_listing%5D=1",
