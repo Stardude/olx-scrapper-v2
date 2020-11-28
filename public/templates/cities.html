@@ -33,8 +33,8 @@
                 <span class="city-stat">{{city.generalAmount || "---"}}</span>
                 <span class="city-stat">{{city.topAmount || "---"}}</span>
                 <span class="city-stat">{{city.topGeneralPercentage ? (city.topGeneralPercentage + "%") : "---"}}</span>
-                <span class="city-stat">{{city.myGeneralAmount || "---"}}</span>
-                <span class="city-stat">{{city.myTopAmount || "---"}}</span>
+                <span class="city-stat" title="{{city.myGeneralRecords.join('&#013;')}}">{{city.myGeneralAmount || "---"}}</span>
+                <span class="city-stat" title="{{city.myTopRecords.join('&#013;')}}">{{city.myTopAmount || "---"}}</span>
                 <div style="display: inline-block; width: 2rem"> </div>
                 <div class="icon-edit" ng-click="editCity(city); $event.stopPropagation();"></div>
                 <div class="icon-delete" ng-click="deleteCity(city); $event.stopPropagation();"></div>

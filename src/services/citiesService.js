@@ -33,6 +33,14 @@ module.exports.updateAmountMany = async (cities) => {
 
 module.exports.getAll = async () => {
     const { count, rows: cities } = await cityDao.getAll();
+    const { statistics } = await statisticsService.get();
+
+    cities.forEach(city => {
+        const filteredRecords = statistics.filter(stat => stat.cityId === city.olxId);
+        city.myGeneralRecords = city.myGeneralAmount ? filteredRecords.filter(stat => !stat.isTop).map(stat => stat.olxId) : [];
+        city.myTopRecords = city.myTopAmount ? filteredRecords.filter(stat => stat.isTop).map(stat => stat.olxId) : [];
+    });
+
     return { count, cities };
 };
 
