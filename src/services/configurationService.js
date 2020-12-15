@@ -10,10 +10,6 @@ module.exports.get = async () => {
     return (await configurationDao.getAll())[0];
 };
 
-module.exports.createDefault = async () => {
-    return configurationDao.create({});
-};
-
 module.exports.update = async data => {
     const original = await module.exports.get();
     const diff = updateUtil.computeDiff(original, data);

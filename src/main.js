@@ -5,7 +5,7 @@
     const routing = require("./routing");
     const middlewares = require("./middlewares");
 
-    const configurationService = require("./services/configurationService");
+    const migrationService = require("./services/migrationService");
 
     const app  = express();
     const PORT = config.PORT;
@@ -16,11 +16,7 @@
         middlewares.loadStatic(app);
 
         await require(`./dao`).connect();
-
-        const configuration = await configurationService.get();
-        if (!configuration) {
-            await configurationService.createDefault();
-        }
+        await migrationService.migrateDatabase();
 
         await app.listen(PORT);
         console.log(`The server is running on port ${PORT}`);

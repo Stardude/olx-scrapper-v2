@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const path = require('path');
+const fs = require('fs');
 
 const config = require('../configStorage');
 const modelsFactory = require('./modelsFactory');
@@ -38,15 +39,16 @@ module.exports = {
             const RecordStatisticsModel = require(`./${config.DATABASE_IMPL}/models/RecordStatistics`);
             const ConfigurationModel = require(`./${config.DATABASE_IMPL}/models/Configuration`);
             const CityModel = require(`./${config.DATABASE_IMPL}/models/City`);
+            const SchemaVersionModel = require(`./${config.DATABASE_IMPL}/models/SchemaVersion`);
             modelsFactory.set(instance, 'category', CategoryModel.fields, CategoryModel.options);
             modelsFactory.set(instance, 'record', RecordModel.fields, RecordModel.options);
             modelsFactory.set(instance, 'recordStatistics', RecordStatisticsModel.fields, RecordStatisticsModel.options);
             modelsFactory.set(instance, 'configuration', ConfigurationModel.fields, ConfigurationModel.options);
             modelsFactory.set(instance, 'city', CityModel.fields, CityModel.options);
+            modelsFactory.set(instance, 'schemaVersion', SchemaVersionModel.fields, SchemaVersionModel.options);
 
             buildAssociations();
-
-            await instance.sync({ alter: true });
+            await instance.sync();
         } catch (err) {
             console.error(`An error occurred during defining models: ${err}`);
             throw err;
@@ -57,5 +59,11 @@ module.exports = {
         return require(`./${config.DATABASE_IMPL}/${daoName}`);
     },
 
-    getInstance: () => instance
+    getMigrations: () => {
+        const fileNames = fs.readdirSync(path.join(__dirname, config.DATABASE_IMPL, 'migrations'));
+        return fileNames.map(name => ({
+            name,
+            action: require(`./${config.DATABASE_IMPL}/migrations/${name}`)
+        }));
+    }
 };
