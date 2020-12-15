@@ -78,6 +78,7 @@ html, body {
   display: none;
   width: 1.5rem;
   height: 1.5rem;
+  cursor: pointer;
   background-size: cover; }
   .icon-edit:hover,
   .icon-delete:hover,
@@ -189,7 +190,6 @@ input[type="text"], input[type="number"], input[type="password"] {
     align-content: flex-start;
     justify-content: flex-start;
     margin: 0.5rem 1rem 0.5rem 0rem;
-    cursor: pointer;
     position: relative; }
     .records .records-item .record-checkbox, .records .records-item .city-checkbox, .records .cities-item .record-checkbox, .records .cities-item .city-checkbox, .cities .records-item .record-checkbox, .cities .records-item .city-checkbox, .cities .cities-item .record-checkbox, .cities .cities-item .city-checkbox {
       margin-right: 0.5rem; }
@@ -203,7 +203,6 @@ input[type="text"], input[type="number"], input[type="password"] {
       justify-content: flex-start;
       font-weight: bold;
       box-shadow: 0 0 3px 0px;
-      cursor: pointer;
       position: relative;
       font-size: 10pt; }
       .records .records-item .records-item-inner:hover .icon-edit,
@@ -266,6 +265,11 @@ input[type="text"], input[type="number"], input[type="password"] {
       .records .records-item .records-item-inner .city-stat, .records .records-item .cities-item-inner .city-stat, .records .cities-item .records-item-inner .city-stat, .records .cities-item .cities-item-inner .city-stat, .cities .records-item .records-item-inner .city-stat, .cities .records-item .cities-item-inner .city-stat, .cities .cities-item .records-item-inner .city-stat, .cities .cities-item .cities-item-inner .city-stat {
         text-align: center;
         width: 4.5rem; }
+      .records .records-item .records-item-inner .city-mystat, .records .records-item .cities-item-inner .city-mystat, .records .cities-item .records-item-inner .city-mystat, .records .cities-item .cities-item-inner .city-mystat, .cities .records-item .records-item-inner .city-mystat, .cities .records-item .cities-item-inner .city-mystat, .cities .cities-item .records-item-inner .city-mystat, .cities .cities-item .cities-item-inner .city-mystat {
+        text-align: center;
+        width: 5rem; }
+        .records .records-item .records-item-inner .city-mystat .city-mystat__main, .records .records-item .cities-item-inner .city-mystat .city-mystat__main, .records .cities-item .records-item-inner .city-mystat .city-mystat__main, .records .cities-item .cities-item-inner .city-mystat .city-mystat__main, .cities .records-item .records-item-inner .city-mystat .city-mystat__main, .cities .records-item .cities-item-inner .city-mystat .city-mystat__main, .cities .cities-item .records-item-inner .city-mystat .city-mystat__main, .cities .cities-item .cities-item-inner .city-mystat .city-mystat__main {
+          cursor: pointer; }
 
 .statistics {
   margin-top: 1rem; }

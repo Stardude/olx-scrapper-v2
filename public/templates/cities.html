@@ -20,8 +20,8 @@
                 <span class="city-stat" ng-click="sortBy('generalAmount')" title="Загальна кількість">ЗАГ{{getSortIcon('generalAmount')}}</span>
                 <span class="city-stat" ng-click="sortBy('topAmount')" title="ТОП кількість">ТОП{{getSortIcon('topAmount')}}</span>
                 <span class="city-stat" ng-click="sortBy('topGeneralPercentage')" title="Відношення загальних до ТОП">%{{getSortIcon('topGeneralPercentage')}}</span>
-                <span class="city-stat" ng-click="sortBy('myGeneralAmount')" title="Моїх Загальна кількість">МЗАГ{{getSortIcon('myGeneralAmount')}}</span>
-                <span class="city-stat" ng-click="sortBy('myTopAmount')" title="Моїх ТОП кількість">МТОП{{getSortIcon('myTopAmount')}}</span>
+                <span class="city-mystat" ng-click="sortBy('myGeneralAmount')" title="Моїх Загальна кількість">МЗАГ{{getSortIcon('myGeneralAmount')}}</span>
+                <span class="city-mystat" ng-click="sortBy('myTopAmount')" title="Моїх ТОП кількість">МТОП{{getSortIcon('myTopAmount')}}</span>
                 <div style="display: inline-block; width: 2rem"> </div>
             </div>
         </div>
@@ -33,8 +33,18 @@
                 <span class="city-stat">{{city.generalAmount || "---"}}</span>
                 <span class="city-stat">{{city.topAmount || "---"}}</span>
                 <span class="city-stat">{{city.topGeneralPercentage ? (city.topGeneralPercentage + "%") : "---"}}</span>
-                <span class="city-stat" title="{{city.myGeneralRecords.join('&#013;')}}">{{city.myGeneralAmount || "---"}}</span>
-                <span class="city-stat" title="{{city.myTopRecords.join('&#013;')}}">{{city.myTopAmount || "---"}}</span>
+                <div class="city-mystat">
+                    <div class="city-mystat__main" ng-click="city.expanded = !city.expanded; $event.stopPropagation();">{{city.myGeneralAmount || "---"}}</div>
+                    <div ng-style="city.expanded ? {'display': 'block'} : {'display': 'none'}" ng-repeat="record in city.myGeneralRecords">
+                        {{record}}
+                    </div>
+                </div>
+                <div class="city-mystat">
+                    <div class="city-mystat__main" ng-click="city.expanded = !city.expanded; $event.stopPropagation();">{{city.myTopAmount || "---"}}</div>
+                    <div ng-style="city.expanded ? {'display': 'block'} : {'display': 'none'}" ng-repeat="record in city.myTopRecords">
+                        {{record}}
+                    </div>
+                </div>
                 <div style="display: inline-block; width: 2rem"> </div>
                 <div class="icon-edit" ng-click="editCity(city); $event.stopPropagation();"></div>
                 <div class="icon-delete" ng-click="deleteCity(city); $event.stopPropagation();"></div>

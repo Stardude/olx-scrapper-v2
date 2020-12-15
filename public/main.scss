@@ -94,6 +94,7 @@ html, body {
     display: none;
     width: 1.5rem;
     height: 1.5rem;
+    cursor: pointer;
     background-size: cover;
 
     &:hover {
@@ -228,7 +229,6 @@ input[type="text"], input[type="number"], input[type="password"] {
         align-content: flex-start;
         justify-content: flex-start;
         margin: 0.5rem 1rem 0.5rem 0rem;
-        cursor: pointer;
         position: relative;
 
         .record-checkbox, .city-checkbox {
@@ -245,7 +245,6 @@ input[type="text"], input[type="number"], input[type="password"] {
             justify-content: flex-start;
             font-weight: bold;
             box-shadow: 0 0 3px 0px;
-            cursor: pointer;
             position: relative;
             font-size: 10pt;
 
@@ -302,6 +301,14 @@ input[type="text"], input[type="number"], input[type="password"] {
             .city-stat {
                 text-align: center;
                 width: 4.5rem;
+            }
+            .city-mystat {
+                text-align: center;
+                width: 5rem;
+
+                .city-mystat__main {
+                    cursor: pointer;
+                }
             }
         }
     }

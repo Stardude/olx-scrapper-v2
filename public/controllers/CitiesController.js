@@ -20,6 +20,7 @@
                     city.original = { ...city };
                     city.checked = false;
                     city.dateOfChecking = city.dateOfChecking || "";
+                    city.expanded = false;
                     city.topGeneralPercentage = (city.generalAmount && city.topAmount) ?
                         (parseInt(city.topAmount || 0) / parseInt(city.generalAmount || 0) * 100).toFixed(2)
                         : "";
@@ -62,6 +63,7 @@
                 delete city.isEdit;
                 delete city.isNew;
                 delete city.checked;
+                delete city.expanded;
                 return city;
             });
         }
