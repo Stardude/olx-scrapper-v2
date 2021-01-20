@@ -30,11 +30,7 @@ const handleEditPage = (priceData, onlyActive) => {
         const { data: record  } = urlData;
         try {
             logger.info(`Processing adv '${record.olxId}'...`);
-            try {
-                await page.waitForSelector(priceInput);
-            } catch (err) {
-                throw err;
-            }
+            await page.waitForSelector(priceInput);
 
             if (onlyActive && await page.$('#choose-category-button') !== null) {
                 await page.waitFor(closePage);
@@ -92,7 +88,7 @@ module.exports.changePrice = async (records, priceData) => {
 
     if (errors.length) {
         for (let i = 0; i < errors.length; i++) {
-            const { data: record, reason: err } = errors[i];
+            const { data: { data: record }, reason: err } = errors[i];
             logger.error(`An error occurred during managing with page for adv '${record.olxId}': ${err}`);
             await recordsService.update(record.id, {
                 ...record,

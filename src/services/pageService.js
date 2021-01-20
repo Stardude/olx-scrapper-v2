@@ -10,16 +10,11 @@ module.exports.loopThroughPages = async (browser, list, action, options) => {
     const successes = [];
     for (let i = 0; i < list.length; i++) {
         promises.push((async () => {
+            const page = await browser.newPage();
             try {
-                const page = await browser.newPage();
                 await page.goto(list[i].url, {waitUntil: 'load', timeout: 0});
-                try {
-                    await page.waitForSelector(page404, {timeout: 5000});
+                if (await page.$(page404) !== null) {
                     throw new Error('Page not found');
-                } catch (err) {
-                    if (err.message === 'Page not found') {
-                        throw err;
-                    }
                 }
 
                 const result = await action(page, list[i]);
@@ -30,6 +25,7 @@ module.exports.loopThroughPages = async (browser, list, action, options) => {
                     reason: err,
                     data: list[i]
                 });
+                await page.close();
             }
         })());
 

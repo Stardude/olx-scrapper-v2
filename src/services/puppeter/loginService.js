@@ -10,19 +10,8 @@ const ROOT_DIR = '../../../';
 const { usernameInput, passwordInput, editAdvLink } = constants.SELECTORS;
 const { host, mainPath } = constants.URLs;
 
-const useCookies = async (cookiesString, page) => {
-    logger.info('Setting cookies...');
-    const cookiesToSet = JSON.parse(cookiesString);
-    await page.setCookie(...cookiesToSet);
-    await page.goto(host + mainPath, {waitUntil: 'load', timeout: 0});
-    await page.waitForSelector(editAdvLink, {timeout: 5000});
-    logger.info('Cookies successfully set!');
-};
-
 const useCredentials = async (page, email, password) => {
     logger.info('Entering credentials...');
-    await page.goto(host + mainPath, {waitUntil: 'load', timeout: 0});
-
     await page.click(usernameInput);
     await page.keyboard.type(email);
 
@@ -43,7 +32,18 @@ module.exports.login = async (page) => {
     try {
         cookiesString = fs.readFileSync(path.join(__dirname, ROOT_DIR, COOKIES_PATH));
         if (cookiesString.toString() !== '') {
-            return useCookies(cookiesString, page);
+            logger.info('Setting cookies...');
+            const cookiesToSet = JSON.parse(cookiesString);
+            await page.setCookie(...cookiesToSet);
+            await page.goto(host + mainPath, {waitUntil: 'load', timeout: 0});
+
+            if (await page.$(editAdvLink) === null) {
+                logger.info('Cookies are expired!');
+                return useCredentials(page, olxEmail, olxPassword);
+            }
+
+            logger.info('Cookies successfully set!');
+            return;
         }
 
         throw new Error();
