@@ -35,7 +35,8 @@ module.exports.login = async (page) => {
             logger.info('Setting cookies...');
             const cookiesToSet = JSON.parse(cookiesString);
             await page.setCookie(...cookiesToSet);
-            await page.goto(host + mainPath, {waitUntil: 'load', timeout: 0});
+            await page.goto(host + mainPath, {waitUntil: 'domcontentloaded', timeout: 0});
+            await page.evaluate(() => window.stop());
 
             if (await page.$(editAdvLink) === null) {
                 logger.info('Cookies are expired!');

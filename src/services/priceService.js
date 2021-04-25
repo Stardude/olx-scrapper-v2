@@ -6,8 +6,8 @@ const constants = require('./puppeter/constants');
 const { getValue } = require('../utils/puppeterUtils');
 const logger = require('../utils/logger')('PRICE');
 
-const { priceInput, confirmWindow } = constants.SELECTORS;
-const { host, editAdvPath } = constants.URLs;
+const { priceInput, saveAdvBtn, categoryButton } = constants.SELECTORS;
+const { host, editAdvPath, successEditingPath } = constants.URLs;
 const { priceChange, saveBtnClick, closePage, keyboardType } = constants.DELAYS;
 
 const getEditUrls = (records) => {
@@ -15,7 +15,9 @@ const getEditUrls = (records) => {
     for (let i = 0; i < records.length; i++) {
         urls.push({
             data: records[i],
-            url: (host + editAdvPath).replace('<CODE>', records[i].olxId)
+            url: (host + editAdvPath)
+                .replace('<CODE>', records[i].olxId)
+                .replace('/uk/', '/d/uk/')
         });
     }
     return urls;
@@ -32,7 +34,7 @@ const handleEditPage = (priceData, onlyActive) => {
             logger.info(`Processing adv '${record.olxId}'...`);
             await page.waitForSelector(priceInput);
 
-            if (onlyActive && await page.$('#choose-category-button') !== null) {
+            if (onlyActive && await page.$(categoryButton) !== null) {
                 await page.waitFor(closePage);
                 throw new Error(`Adv ${record.olxId} is not active`);
             }
@@ -57,8 +59,12 @@ const handleEditPage = (priceData, onlyActive) => {
             await page.keyboard.type(`${newValue}`, { delay: keyboardType });
 
             await page.waitFor(saveBtnClick);
-            await page.click('#save');
-            await page.waitForSelector(confirmWindow);
+            await page.click(saveAdvBtn);
+            await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
+
+            if (!page.url().match(successEditingPath)) {
+                throw new Error(`Something went wrong with updating adv ${record.olxId}`);
+            }
 
             await recordsService.update(record.id, {
                 ...record,
