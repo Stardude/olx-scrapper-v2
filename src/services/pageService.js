@@ -1,6 +1,6 @@
 const constants = require('./puppeter/constants');
 
-const { xhrPageNotFound } = constants.URLs;
+const { cityPage404 } = constants.SELECTORS;
 
 module.exports.loopThroughPages = async (browser, list, action, options) => {
     const pagesPerIteration = options.pagesPerIteration;
@@ -14,18 +14,10 @@ module.exports.loopThroughPages = async (browser, list, action, options) => {
             try {
                 await page.goto(list[i].url, {waitUntil: 'domcontentloaded', timeout: 0});
 
-                // Catch XHR failed response
-                await new Promise((resolve, reject) => {
-                    page.on('response', async (response) => {
-                        if (response.url().match(xhrPageNotFound)){
-                            if (!response.ok()) {
-                                reject('Page not found');
-                            } else {
-                                resolve();
-                            }
-                        }
-                    });
-                });
+                const page404Handle = await page.$(cityPage404);
+                if (page404Handle) {
+                    throw new Error('Page not found');
+                }
 
                 const result = await action(page, list[i]);
                 successes.push(result);

@@ -8,6 +8,7 @@ module.exports = {
         saveAdvBtn: "button[data-testid=submit-btn]",
         confirmWindow: "#body-container > div > div > div > div.confirm-polaroid__main",
         page404: "div[data-testid=loader]",
+        cityPage404: "div.page404",
         cityAmount: "#body-container",
         categoryButton: "#posting-form > main:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div > button",
 
