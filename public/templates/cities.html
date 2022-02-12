@@ -32,7 +32,7 @@
         <div class="cities-item" ng-repeat="city in data.cities">
             <input class="city-checkbox" type="checkbox" ng-model="city.checked" />
             <div ng-if="!city.isEdit && !city.isNew" class="cities-item-inner">
-                <input type="text" class="city-population" value="{{city.population}}" ng-model="city.population" ng-change="onPopulationUpdate(city)" />
+                <input type="number" class="city-population" value="{{city.population}}" ng-model="city.population" ng-change="onPopulationUpdate(city)" />
                 <span class="city-info">{{city.olxId}} - {{city.name}}</span>
                 <span class="city-date">{{city.dateOfChecking ? formatDate(city.dateOfChecking) : "-----"}}</span>
                 <span class="city-stat">{{city.generalAmount || "---"}}</span>
