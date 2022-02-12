@@ -48,6 +48,8 @@ module.exports = {
             modelsFactory.set(instance, 'schemaVersion', SchemaVersionModel.fields, SchemaVersionModel.options);
 
             buildAssociations();
+
+            // DON'T USE { force: true } -> USE { alter: true }
             await instance.sync();
         } catch (err) {
             console.error(`An error occurred during defining models: ${err}`);

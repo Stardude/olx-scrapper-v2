@@ -5,6 +5,8 @@
         $scope.data = {
             cities: [],
             addDisabled: false,
+            updatePopulationDisabled: true,
+            citiesWithUpdatedPopulation: [],
             sortColumns: [],
             sortDirections: []
         };
@@ -141,6 +143,37 @@
             $scope.data.cities.forEach(city => {
                 city.checked = checked;
             });
+        };
+
+        $scope.onPopulationUpdate = function (city) {
+            const population = city.population === "" ? 0 : parseInt(city.population);
+
+            const index = $scope.data.citiesWithUpdatedPopulation.findIndex(c => c.olxId === city.olxId);
+            if (population !== city.original.population) {
+                $scope.data.updatePopulationDisabled = false;
+
+                if (index === -1) {
+                    $scope.data.citiesWithUpdatedPopulation.push({ ...city, isEdit: true });
+                } else {
+                    $scope.data.citiesWithUpdatedPopulation[index].population = population;
+                }
+            } else {
+                if (index !== -1) {
+                    $scope.data.citiesWithUpdatedPopulation.splice(index, 1);
+                }
+
+                if (!$scope.data.citiesWithUpdatedPopulation.length) {
+                    $scope.data.updatePopulationDisabled = true;
+                }
+            }
+        };
+
+        $scope.updatePopulation = async () => {
+            for await (const city of $scope.data.citiesWithUpdatedPopulation) {
+                await $scope.saveCity(city);
+            }
+
+            $scope.data.updatePopulationDisabled = true;
         };
 
         $scope.collectStatistics = async () => {

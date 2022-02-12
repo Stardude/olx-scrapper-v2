@@ -35,6 +35,11 @@ module.exports = {
         dateOfChecking: {
             type: DataTypes.STRING(24),
             allowNull: true
+        },
+        population: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
         }
     },
     options: {}

@@ -10,11 +10,15 @@
             <input type="button" value="Зберегти в Excel" ng-click="storeToExcel()" style="margin-bottom: 0.2rem" />
             <input type="button" value="Зібрати + Зберегти в Excel" ng-click="collectAndStore()" />
         </div>
+        <div class="button-section">
+            <input type="button" value="Оновити населення" ng-disabled="data.updatePopulationDisabled" ng-click="updatePopulation()"/>
+        </div>
     </div>
     <div class="cities">
         <div class="cities-item">
             <div style="display: inline-block; width: 1.5rem"> </div>
             <div class="cities-item-inner">
+                <span class="city-population" ng-click="sortBy('population')">НАС{{getSortIcon('population')}}</span>
                 <span class="city-info" ng-click="sortBy('olxId')">Код міста - Назва міста{{getSortIcon('olxId')}}</span>
                 <span class="city-date" ng-click="sortBy('dateOfChecking')" title="Дата перевірки">Дата {{getSortIcon('dateOfChecking')}}</span>
                 <span class="city-stat" ng-click="sortBy('generalAmount')" title="Загальна кількість">ЗАГ{{getSortIcon('generalAmount')}}</span>
@@ -28,6 +32,7 @@
         <div class="cities-item" ng-repeat="city in data.cities">
             <input class="city-checkbox" type="checkbox" ng-model="city.checked" />
             <div ng-if="!city.isEdit && !city.isNew" class="cities-item-inner">
+                <input type="text" class="city-population" value="{{city.population}}" ng-model="city.population" ng-change="onPopulationUpdate(city)" />
                 <span class="city-info">{{city.olxId}} - {{city.name}}</span>
                 <span class="city-date">{{city.dateOfChecking ? formatDate(city.dateOfChecking) : "-----"}}</span>
                 <span class="city-stat">{{city.generalAmount || "---"}}</span>
