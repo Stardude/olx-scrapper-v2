@@ -18,7 +18,8 @@ const useCredentials = async (page, email, password) => {
     await page.click(passwordInput);
     await page.keyboard.type(password);
 
-    await page.waitForSelector(editAdvLink, {timeout: 0});
+    await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
+    // await page.waitForSelector(editAdvLink, {timeout: 0});
     logger.info('User has successfully log in!');
     logger.info('Saving cookies...');
     const cookies = await page.cookies();
@@ -38,10 +39,10 @@ module.exports.login = async (page) => {
             await page.goto(host + mainPath, {waitUntil: 'domcontentloaded', timeout: 0});
             await page.evaluate(() => window.stop());
 
-            if (await page.$(editAdvLink) === null) {
-                logger.info('Cookies are expired!');
-                return useCredentials(page, olxEmail, olxPassword);
-            }
+            // if (await page.$(editAdvLink) === null) {
+            //     logger.info('Cookies are expired!');
+            //     return useCredentials(page, olxEmail, olxPassword);
+            // }
 
             logger.info('Cookies successfully set!');
             return;
