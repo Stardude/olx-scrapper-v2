@@ -11,6 +11,7 @@ const { usernameInput, passwordInput, editAdvLink } = constants.SELECTORS;
 const { host, mainPath } = constants.URLs;
 
 const useCredentials = async (page, email, password) => {
+    await page.goto(host + mainPath);
     logger.info('Entering credentials...');
     await page.click(usernameInput);
     await page.keyboard.type(email);

@@ -9,7 +9,7 @@ const logger = require('../utils/logger')('STATISTICS_SERVICE');
 const constants = require('./puppeter/constants');
 const { getValue, getDataFeaturesAttribute } = require('../utils/puppeterUtils');
 
-const { editAdvLink, pagination, views, phones, chosen, message, city, isTop, isTopInner } = constants.SELECTORS;
+const { editAdvLink, orderList, views, phones, chosen, message, city, isTop, isTopInner } = constants.SELECTORS;
 const { host, mainPath } = constants.URLs;
 
 module.exports.get = async () => {
@@ -22,10 +22,11 @@ module.exports.countByCityId = async () => {
 };
 
 const getAdvIds = async page => {
-    const editLinks = await page.$$(editAdvLink);
+    const spans = await page.$$("span[data-cy=ad-id]");
     const advIds = [];
-    for (let i = 0; i < editLinks.length; i++) {
-        advIds.push((await getValue(editLinks[i], 'id')).slice(4));
+    for (let i = 0; i < spans.length; i++) {
+        const val = await getValue(spans[i], 'innerText');
+        advIds.push(val.slice(4));
     }
 
     return advIds;
@@ -96,9 +97,10 @@ const fetchByAdvType = async (acc, page, advType) => {
     do {
         pageUrl = host + mainPath + `/${advType}?page=${pageNumber}`;
         await page.goto(pageUrl, {waitUntil: 'load', timeout: 0});
-        if (paginationHandlers.length === 0) {
-            paginationHandlers = await page.$$(pagination);
-        }
+        await page.waitForSelector(orderList);
+        // if (paginationHandlers.length === 0) {
+        //     paginationHandlers = await page.$$(pagination);
+        // }
 
         let advIdsOnPage = await getAdvIds(page);
         let advStatistics = [

@@ -2,6 +2,7 @@ module.exports = {
     SELECTORS: {
         usernameInput: "#userEmail",
         passwordInput: "#userPass",
+        orderList: "div[data-testid=inventory-list]",
         pagination: "span.item.fleft",
         editAdvLink: "ul.myoffersnew__main-actions > li > a.editme",
         priceInput: "input#parameters\\.price\\.price",
@@ -12,10 +13,10 @@ module.exports = {
         cityAmount: "#body-container",
         categoryButton: "#posting-form > main:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div > button",
 
-        views: "#adsTable > div.tbody > div > div.myoffersnew__item > div.myoffersnew__cell.myoffersnew__cell--content > div.myoffersnew__details > ul > li:nth-child(2) > span",
-        phones: "#adsTable > div.tbody > div > div.myoffersnew__item > div.myoffersnew__cell.myoffersnew__cell--content > div.myoffersnew__details > ul > li:nth-child(3) > span",
-        chosen: "#adsTable > div.tbody > div > div.myoffersnew__item > div.myoffersnew__cell.myoffersnew__cell--content > div.myoffersnew__details > ul > li:nth-child(4) > span",
-        message: "#adsTable > div.tbody > div > div.myoffersnew__item > div.myoffersnew__cell.myoffersnew__cell--content > div.myoffersnew__details > div.myoffersnew__messages span.inlblk",
+        views: "div[data-cy=inventory-stats] > span > ul > li:nth-child(1)",
+        phones: "div[data-cy=inventory-stats] > span > ul > li:nth-child(3)",
+        chosen: "div[data-cy=inventory-stats] > span > ul > li:nth-child(2)",
+        message: "strong[data-testid=inventory-message-counter]",
         city: "div.myoffersnew__row.row-elem",
         isTop: "ul.myoffersnew__data",
         isTopInner: "ul.olx-bundle-bought__items i[data-icon=circle_tick]"
